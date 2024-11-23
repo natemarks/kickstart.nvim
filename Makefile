@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: shellcheck
+.PHONY: shellcheck restore
 DEFAULT_BRANCH := master
 SHELL := /bin/bash
 PRJ := $(PWD)
@@ -13,4 +13,7 @@ shellcheck: ## use black to format python files
 	( \
        git ls-files 'scripts/*.sh' |  xargs shellcheck --format=gcc; \
     )
+
+restore: ## restore original config and share
+	bash scripts/restore.sh
 
