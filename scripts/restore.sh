@@ -15,5 +15,7 @@ if [[ ! -d "${SHARE_BACKUP}" ]]; then
   mv "${SHARE}" "${SHARE_BACKUP}"
 fi
 
+rm -rf "${CONFIG}"
+rm -rf "${SHARE}"
 cp -a "${CONFIG_BACKUP}" "${CONFIG}"
 cp -a "${SHARE_BACKUP}" "${SHARE}"
