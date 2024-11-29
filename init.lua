@@ -879,10 +879,19 @@ require('lazy').setup({
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
   {
-    "ThePrimeagen/harpoon",
-    name = "harpoon",
-    branch = "harpoon2",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    -- https://github.com/ThePrimeagen/harpoon
+    'ThePrimeagen/harpoon',
+    branch = 'master',
+    event = 'VeryLazy',
+    dependencies = {
+      -- https://github.com/nvim-lua/plenary.nvim
+      'nvim-lua/plenary.nvim',
+    },
+    opts = {
+      menu = {
+        width = 120
+      }
+    },
   },
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
