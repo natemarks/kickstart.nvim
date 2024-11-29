@@ -15,5 +15,7 @@ if [[ ! -d "${SHARE_BACKUP}" ]]; then
   mv "${SHARE}" "${SHARE_BACKUP}"
 fi
 
-cp -a "${CONFIG_BACKUP}" "${CONFIG}"
-cp -a "${SHARE_BACKUP}" "${SHARE}"
+rm -rf "${CONFIG}"
+rm -rf "${SHARE}"
+
+git clone https://github.com/natemarks/kickstart.nvim.git "${HOME}/.config/nvim"

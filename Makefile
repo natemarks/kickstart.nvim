@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: shellcheck restore
+.PHONY: shellcheck restore deploy
 DEFAULT_BRANCH := master
 SHELL := /bin/bash
 PRJ := $(PWD)
@@ -16,4 +16,7 @@ shellcheck: ## use black to format python files
 
 restore: ## restore original config and share
 	bash scripts/restore.sh
+
+deploy: ## restore original config and share
+	bash scripts/deploy.sh
 
