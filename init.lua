@@ -1020,5 +1020,16 @@ wk.add({
   { "<leader>m9", function() require("harpoon.ui").nav_file(9) end, desc = "Harpoon:9", mode = "n" },
 })
 
+
+-- Quicksave command
+keymap.set('n', '<C-Z>', ':update<CR>', {noremap = true})
+keymap.set('v', '<C-Z>', '<C-C>:update<CR>', {noremap = true})
+keymap.set('i', '<C-Z>', '<C-O>:update<CR>', {noremap = true})
+
+-- Quick quit command
+keymap.set('n', '<Leader>e', ':quit<CR>', {noremap = true})  -- Quit current window
+keymap.set('n', '<Leader>E', ':qa!<CR>', {noremap = true})   -- Quit all windows
+
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
