@@ -882,7 +882,6 @@ require('lazy').setup({
     "ThePrimeagen/harpoon",
     branch = "harpoon2",
     dependencies = { "nvim-lua/plenary.nvim" },
-    require('which-key')
   },
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
