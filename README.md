@@ -235,6 +235,11 @@ sudo pacman -S --noconfirm --needed gcc make git ripgrep fd unzip neovim
 
 ## Personal Notes
 
+
+Great luasnip article:
+
+https://ejmastnak.com/tutorials/vim-latex/luasnip/
+
 Python test snippets
 Go generate tests
 run  tests 
