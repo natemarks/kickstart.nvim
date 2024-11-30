@@ -235,6 +235,7 @@ sudo pacman -S --noconfirm --needed gcc make git ripgrep fd unzip neovim
 
 ## Personal Notes
 
+DONE: added friendly-snippets to test out luasnip.  C-L expands teh snippet and jumps to the next token
 
 Great luasnip article:
 
