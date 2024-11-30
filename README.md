@@ -231,3 +231,12 @@ sudo pacman -S --noconfirm --needed gcc make git ripgrep fd unzip neovim
 ```
 </details>
 
+
+
+## Personal Notes
+
+Python test snippets
+Go generate tests
+run  tests 
+debug tests
+
