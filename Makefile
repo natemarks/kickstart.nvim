@@ -14,6 +14,11 @@ shellcheck: ## use black to format python files
        git ls-files 'scripts/*.sh' |  xargs shellcheck --format=gcc; \
     )
 
+stylus: ## run stylua formatter
+	( \
+       stylua .; \
+    )
+
 restore: ## restore original config and share
 	bash scripts/restore.sh
 

@@ -237,25 +237,25 @@ require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
- {
-    "kdheepak/lazygit.nvim",
+  {
+    'kdheepak/lazygit.nvim',
     cmd = {
-        "LazyGit",
-        "LazyGitConfig",
-        "LazyGitCurrentFile",
-        "LazyGitFilter",
-        "LazyGitFilterCurrentFile",
+      'LazyGit',
+      'LazyGitConfig',
+      'LazyGitCurrentFile',
+      'LazyGitFilter',
+      'LazyGitFilterCurrentFile',
     },
     -- optional for floating window border decoration
     dependencies = {
-        "nvim-lua/plenary.nvim",
+      'nvim-lua/plenary.nvim',
     },
     -- setting the keybinding for LazyGit with 'keys' is recommended in
     -- order to load the plugin when the command is run for the first time
     keys = {
-        { "<leader>vv", "<cmd>LazyGit<cr>", desc = "Open lazy git" },
+      { '<leader>vv', '<cmd>LazyGit<cr>', desc = 'Open lazy git' },
     },
- },
+  },
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
   -- keys can be used to configure plugin behavior/loading/etc.
@@ -890,8 +890,8 @@ require('lazy').setup({
     },
     opts = {
       menu = {
-        width = 120
-      }
+        width = 120,
+      },
     },
   },
   { -- Collection of various small independent plugins/modules
@@ -977,7 +977,7 @@ require('lazy').setup({
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
@@ -1005,32 +1005,93 @@ require('lazy').setup({
   },
 })
 
-local wk = require("which-key")
-wk.add({
-  { "<leader>m", group = "Harpoon [M]ark" },
-  { "<leader>ma", require("harpoon.mark").add_file, desc = "Add File", mode = "n" },
-  { "<leader>mm", require("harpoon.ui").toggle_quick_menu, desc = "Show UI", mode = "n" },
-  { "<leader>m1", function() require("harpoon.ui").nav_file(1) end, desc = "Harpoon:1", mode = "n" },
-  { "<leader>m2", function() require("harpoon.ui").nav_file(2) end, desc = "Harpoon:2", mode = "n" },
-  { "<leader>m3", function() require("harpoon.ui").nav_file(3) end, desc = "Harpoon:3", mode = "n" },
-  { "<leader>m4", function() require("harpoon.ui").nav_file(4) end, desc = "Harpoon:4", mode = "n" },
-  { "<leader>m5", function() require("harpoon.ui").nav_file(5) end, desc = "Harpoon:5", mode = "n" },
-  { "<leader>m6", function() require("harpoon.ui").nav_file(6) end, desc = "Harpoon:6", mode = "n" },
-  { "<leader>m7", function() require("harpoon.ui").nav_file(7) end, desc = "Harpoon:7", mode = "n" },
-  { "<leader>m8", function() require("harpoon.ui").nav_file(8) end, desc = "Harpoon:8", mode = "n" },
-  { "<leader>m9", function() require("harpoon.ui").nav_file(9) end, desc = "Harpoon:9", mode = "n" },
-})
-
+local wk = require 'which-key'
+wk.add {
+  { '<leader>m', group = 'Harpoon [M]ark' },
+  { '<leader>ma', require('harpoon.mark').add_file, desc = 'Add File', mode = 'n' },
+  { '<leader>mm', require('harpoon.ui').toggle_quick_menu, desc = 'Show UI', mode = 'n' },
+  {
+    '<leader>m1',
+    function()
+      require('harpoon.ui').nav_file(1)
+    end,
+    desc = 'Harpoon:1',
+    mode = 'n',
+  },
+  {
+    '<leader>m2',
+    function()
+      require('harpoon.ui').nav_file(2)
+    end,
+    desc = 'Harpoon:2',
+    mode = 'n',
+  },
+  {
+    '<leader>m3',
+    function()
+      require('harpoon.ui').nav_file(3)
+    end,
+    desc = 'Harpoon:3',
+    mode = 'n',
+  },
+  {
+    '<leader>m4',
+    function()
+      require('harpoon.ui').nav_file(4)
+    end,
+    desc = 'Harpoon:4',
+    mode = 'n',
+  },
+  {
+    '<leader>m5',
+    function()
+      require('harpoon.ui').nav_file(5)
+    end,
+    desc = 'Harpoon:5',
+    mode = 'n',
+  },
+  {
+    '<leader>m6',
+    function()
+      require('harpoon.ui').nav_file(6)
+    end,
+    desc = 'Harpoon:6',
+    mode = 'n',
+  },
+  {
+    '<leader>m7',
+    function()
+      require('harpoon.ui').nav_file(7)
+    end,
+    desc = 'Harpoon:7',
+    mode = 'n',
+  },
+  {
+    '<leader>m8',
+    function()
+      require('harpoon.ui').nav_file(8)
+    end,
+    desc = 'Harpoon:8',
+    mode = 'n',
+  },
+  {
+    '<leader>m9',
+    function()
+      require('harpoon.ui').nav_file(9)
+    end,
+    desc = 'Harpoon:9',
+    mode = 'n',
+  },
+}
 
 -- Quicksave command
-vim.keymap.set('n', '<C-Z>', ':update<CR>', {noremap = true})
-vim.keymap.set('v', '<C-Z>', '<C-C>:update<CR>', {noremap = true})
-vim.keymap.set('i', '<C-Z>', '<C-O>:update<CR>', {noremap = true})
+vim.keymap.set('n', '<C-Z>', ':update<CR>', { noremap = true })
+vim.keymap.set('v', '<C-Z>', '<C-C>:update<CR>', { noremap = true })
+vim.keymap.set('i', '<C-Z>', '<C-O>:update<CR>', { noremap = true })
 
 -- Quick quit command
-vim.keymap.set('n', '<Leader>e', ':quit<CR>', {noremap = true})  -- Quit current window
-vim.keymap.set('n', '<Leader>E', ':qa!<CR>', {noremap = true})   -- Quit all windows
-
+vim.keymap.set('n', '<Leader>e', ':quit<CR>', { noremap = true }) -- Quit current window
+vim.keymap.set('n', '<Leader>E', ':qa!<CR>', { noremap = true }) -- Quit all windows
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
