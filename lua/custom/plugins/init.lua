@@ -1,3 +1,4 @@
+M = {}
 -- You can add your own plugins here or in other files in this directory!
 --  I promise not to create any merge conflicts in this directory :)
 --
@@ -6,13 +7,13 @@ local ls = require 'luasnip'
 local types = require 'luasnip.util.types'
 ls.config.set_config {
   history = true,
-  updateevents = "TextChanged,TextChangedI",
+  updateevents = 'TextChanged,TextChangedI',
   -- enable_autosnippets = true,
   -- ext_opts = nil,
   ext_opts = {
     [types.choiceNode] = {
       active = {
-        virt_text = { { "<-", "Error" } },
+        virt_text = { { '<-', 'Error' } },
       },
     },
   },
@@ -37,7 +38,23 @@ local fmta = require('luasnip.extras.fmt').fmta
 local conds = require 'luasnip.extras.conditions'
 local conds_expand = require 'luasnip.extras.conditions.expand'
 
-vim.keymap.set("n", "<leader>,<leader>,s", "<cmd>source ~/.config/nvim/after/plugin/luasnip.lua<CR>")
-return {
-  ls.add_snippets('python', {}),
-}
+ls.add_snippets('python', {
+  s('pyt', {
+    t {
+      '@pytest.mark.unit',
+      '@pytest.mark.parametrize(',
+      '    "',
+    },
+    i(1, "config_dir"),
+    t{
+      '",',
+      '    [',
+      '        pytest.param("config/sandbox/rel1977_1", id="sandbox_actual"),',
+      '    ],',
+      ')',
+      'def ',
+    },
+    i(2, "test_app_vpc_stack"),
+  }),
+})
+return M
