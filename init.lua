@@ -1124,5 +1124,21 @@ vim.keymap.set('i', '<C-Z>', '<C-O>:update<CR>', { noremap = true })
 vim.keymap.set('n', '<Leader>e', ':quit<CR>', { noremap = true }) -- Quit current window
 vim.keymap.set('n', '<Leader>E', ':qa!<CR>', { noremap = true }) -- Quit all windows
 
+local nt = require 'neotest'
+vim.keymap.set('n', '<leader>xt', function()
+  nt.run.run()
+end, { desc = 'Run nearest test' })
+
+vim.keymap.set('n', '<leader>xs', function()
+  nt.run.run()
+end, { desc = 'Stop nearest test' })
+
+vim.keymap.set('n', '<leader>xd', function()
+  nt.run.run { strategy = 'dap' }
+end, { desc = 'Debug nearest test' })
+
+vim.keymap.set('n', '<leader>xf', function()
+  nt.run.run(vim.fn.expand '%')
+end, { desc = 'Run tests in file' })
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
