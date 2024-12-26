@@ -1,8 +1,7 @@
 # kickstart.nvimA
 
-PORBLEM: can't get neotest running
-PROBLEM: can't debug through neotest
 PROBLEM: can use copilot plugin
+PROBLEM compare git branches
 
 ## Introduction
 
