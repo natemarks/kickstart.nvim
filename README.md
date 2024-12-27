@@ -3,7 +3,6 @@
 PROBLEM: can use copilot plugin
 PROBLEM compare git branches
 PROBLEM: generate go tets
-PROBLEM verify neotest and debug with Go
 
 ## Introduction
 
