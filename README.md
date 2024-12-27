@@ -1,7 +1,7 @@
 # kickstart.nvimA
 
+PROBLEM compare git branches diffview.nvim requires git 2.31
 PROBLEM: can use copilot plugin
-PROBLEM compare git branches
 PROBLEM: generate go tets
 
 ## Introduction
