@@ -1,5 +1,7 @@
 # kickstart.nvimA
 
+
+
 PROBLEM compare git branches diffview.nvim requires git 2.31
 PROBLEM: can use copilot plugin
 PROBLEM: generate go tets
@@ -18,6 +20,8 @@ A starting point for Neovim that is:
 
 **NOT** a Neovim distribution, but instead a starting point for your configuration.
 
+## Requriements
+Neovim and a modern version of git via git-core/ppa
 ## Installation
 
 ### Install Neovim

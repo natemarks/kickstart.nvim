@@ -984,6 +984,13 @@ require('lazy').setup({
     end,
   },
   {
+    'sindrets/diffview.nvim',
+    -- cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
+    config = function()
+      require('diffview').setup()
+    end,
+  },
+  {
     'nvim-neotest/neotest-python',
     dependencies = {
       'nvim-neotest/neotest',
