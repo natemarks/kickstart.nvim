@@ -991,6 +991,9 @@ require('lazy').setup({
     end,
   },
   {
+    'github/copilot.vim',
+  },
+  {
     'nvim-neotest/neotest-python',
     dependencies = {
       'nvim-neotest/neotest',
