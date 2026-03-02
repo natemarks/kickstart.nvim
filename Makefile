@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: shellcheck restore deploy
+.PHONY: shellcheck restore deploy test-nvim
 DEFAULT_BRANCH := master
 SHELL := /bin/bash
 PRJ := $(PWD)
@@ -24,4 +24,7 @@ restore: ## restore original config and share
 
 deploy: ## restore original config and share
 	bash scripts/deploy.sh
+
+test-nvim: ## run nvim with this project's init.lua/runtimepath
+	nvim -u "$(PRJ)/init.lua" --cmd "set runtimepath^=$(PRJ)"
 
