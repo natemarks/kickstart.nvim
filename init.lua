@@ -298,65 +298,7 @@ require('lazy').setup({
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
-    opts = {
-      icons = {
-        -- set icon mappings to true if you have a Nerd Font
-        mappings = vim.g.have_nerd_font,
-        -- If you are using a Nerd Font: set icons.keys to an empty table which will use the
-        -- default whick-key.nvim defined Nerd Font icons, otherwise define a string table
-        keys = vim.g.have_nerd_font and {} or {
-          Up = '<Up> ',
-          Down = '<Down> ',
-          Left = '<Left> ',
-          Right = '<Right> ',
-          C = '<C-…> ',
-          M = '<M-…> ',
-          D = '<D-…> ',
-          S = '<S-…> ',
-          CR = '<CR> ',
-          Esc = '<Esc> ',
-          ScrollWheelDown = '<ScrollWheelDown> ',
-          ScrollWheelUp = '<ScrollWheelUp> ',
-          NL = '<NL> ',
-          BS = '<BS> ',
-          Space = '<Space> ',
-          Tab = '<Tab> ',
-          F1 = '<F1>',
-          F2 = '<F2>',
-          F3 = '<F3>',
-          F4 = '<F4>',
-          F5 = '<F5>',
-          F6 = '<F6>',
-          F7 = '<F7>',
-          F8 = '<F8>',
-          F9 = '<F9>',
-          F10 = '<F10>',
-          F11 = '<F11>',
-          F12 = '<F12>',
-        },
-      },
-
-      -- Document existing key chains
-      spec = {
-        { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
-        { '<leader>d', group = '[D]ocument' },
-        { '<leader>r', group = '[R]ename' },
-        { '<leader>f', group = '[F]ind' },
-        { '<leader>w', group = '[W]orkspace' },
-        { '<leader>w', desc = '[W]rite current buffer' },
-        { '<leader>W', desc = '[W]rite all buffers' },
-        { '<leader>t', group = '[T]oggle' },
-        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
-        { 'gz', group = 'Surround' },
-        { 'gza', desc = 'Surround [A]dd' },
-        { 'gzd', desc = 'Surround [D]elete' },
-        { 'gzr', desc = 'Surround [R]eplace' },
-        { 'gzf', desc = 'Surround [F]ind right' },
-        { 'gzF', desc = 'Surround [F]ind left' },
-        { 'gzh', desc = 'Surround [H]ighlight' },
-        { 'gzn', desc = 'Surround update [N] lines' },
-      },
-    },
+    opts = require 'kickstart.plugins.which_key.config',
   },
 
   -- NOTE: Plugins can specify dependencies.
@@ -785,21 +727,7 @@ require('lazy').setup({
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
-  {
-    -- https://github.com/ThePrimeagen/harpoon
-    'ThePrimeagen/harpoon',
-    branch = 'master',
-    event = 'VeryLazy',
-    dependencies = {
-      -- https://github.com/nvim-lua/plenary.nvim
-      'nvim-lua/plenary.nvim',
-    },
-    opts = {
-      menu = {
-        width = 120,
-      },
-    },
-  },
+  require 'kickstart.plugins.harpoon',
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
     config = function()
@@ -963,85 +891,6 @@ require('lazy').setup({
     },
   },
 })
-
-local wk = require 'which-key'
-wk.add {
-  { '<leader>m', group = 'Harpoon [M]ark' },
-  { '<leader>ma', require('harpoon.mark').add_file, desc = 'Add File', mode = 'n' },
-  { '<leader>mm', require('harpoon.ui').toggle_quick_menu, desc = 'Show UI', mode = 'n' },
-  {
-    '<leader>m1',
-    function()
-      require('harpoon.ui').nav_file(1)
-    end,
-    desc = 'Harpoon:1',
-    mode = 'n',
-  },
-  {
-    '<leader>m2',
-    function()
-      require('harpoon.ui').nav_file(2)
-    end,
-    desc = 'Harpoon:2',
-    mode = 'n',
-  },
-  {
-    '<leader>m3',
-    function()
-      require('harpoon.ui').nav_file(3)
-    end,
-    desc = 'Harpoon:3',
-    mode = 'n',
-  },
-  {
-    '<leader>m4',
-    function()
-      require('harpoon.ui').nav_file(4)
-    end,
-    desc = 'Harpoon:4',
-    mode = 'n',
-  },
-  {
-    '<leader>m5',
-    function()
-      require('harpoon.ui').nav_file(5)
-    end,
-    desc = 'Harpoon:5',
-    mode = 'n',
-  },
-  {
-    '<leader>m6',
-    function()
-      require('harpoon.ui').nav_file(6)
-    end,
-    desc = 'Harpoon:6',
-    mode = 'n',
-  },
-  {
-    '<leader>m7',
-    function()
-      require('harpoon.ui').nav_file(7)
-    end,
-    desc = 'Harpoon:7',
-    mode = 'n',
-  },
-  {
-    '<leader>m8',
-    function()
-      require('harpoon.ui').nav_file(8)
-    end,
-    desc = 'Harpoon:8',
-    mode = 'n',
-  },
-  {
-    '<leader>m9',
-    function()
-      require('harpoon.ui').nav_file(9)
-    end,
-    desc = 'Harpoon:9',
-    mode = 'n',
-  },
-}
 
 -- Quicksave command
 vim.keymap.set('n', '<leader>w', ':update<CR>', { noremap = true, desc = 'Write current buffer' })
