@@ -6,6 +6,7 @@ PRJ := $(PWD)
 COMMIT := $(shell git rev-parse HEAD)
 
 
+
 help: ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
@@ -23,7 +24,7 @@ restore: ## restore original config and share
 	bash scripts/restore.sh
 
 deploy: ## restore original config and share
-	bash scripts/deploy.sh
+	bash scripts/deploy.sh $(DEFAULT_BRANCH)
 
 test-nvim: ## run nvim with this project's init.lua/runtimepath
 	nvim -u "$(PRJ)/init.lua" --cmd "set runtimepath^=$(PRJ)"

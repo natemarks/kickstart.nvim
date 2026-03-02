@@ -3,6 +3,7 @@ CONFIG="${HOME}/.config/nvim"
 SHARE="${HOME}/.local/share/nvim"
 CONFIG_BACKUP="${HOME}/.config/nvim.backup"
 SHARE_BACKUP="${HOME}/.local/share/nvim.backup"
+BRANCH="${1:-master}"
 
 if [[ ! -d "${CONFIG_BACKUP}" ]]; then
   echo moving "${CONFIG} to ${CONFIG_BACKUP}"
@@ -19,3 +20,4 @@ rm -rf "${CONFIG}"
 rm -rf "${SHARE}"
 
 git clone https://github.com/natemarks/kickstart.nvim.git "${HOME}/.config/nvim"
+git -C "${HOME}/.config/nvim" checkout "${BRANCH}"
