@@ -343,6 +343,8 @@ require('lazy').setup({
         { '<leader>r', group = '[R]ename' },
         { '<leader>f', group = '[F]ind' },
         { '<leader>w', group = '[W]orkspace' },
+        { '<leader>w', desc = '[W]rite current buffer' },
+        { '<leader>W', desc = '[W]rite all buffers' },
         { '<leader>t', group = '[T]oggle' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       },
@@ -1024,9 +1026,9 @@ wk.add {
 }
 
 -- Quicksave command
-vim.keymap.set('n', '<C-Z>', ':update<CR>', { noremap = true })
-vim.keymap.set('v', '<C-Z>', '<C-C>:update<CR>', { noremap = true })
-vim.keymap.set('i', '<C-Z>', '<C-O>:update<CR>', { noremap = true })
+vim.keymap.set('n', '<leader>w', ':update<CR>', { noremap = true, desc = 'Write current buffer' })
+vim.keymap.set('v', '<leader>w', '<C-C>:update<CR>', { noremap = true, desc = 'Write current buffer' })
+vim.keymap.set('n', '<leader>W', ':wall<CR>', { noremap = true, desc = 'Write all buffers' })
 
 -- Quick quit command
 vim.keymap.set('n', '<Leader>e', ':quit<CR>', { noremap = true }) -- Quit current window
