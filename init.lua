@@ -347,6 +347,14 @@ require('lazy').setup({
         { '<leader>W', desc = '[W]rite all buffers' },
         { '<leader>t', group = '[T]oggle' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+        { 'gz', group = 'Surround' },
+        { 'gza', desc = 'Surround [A]dd' },
+        { 'gzd', desc = 'Surround [D]elete' },
+        { 'gzr', desc = 'Surround [R]eplace' },
+        { 'gzf', desc = 'Surround [F]ind right' },
+        { 'gzF', desc = 'Surround [F]ind left' },
+        { 'gzh', desc = 'Surround [H]ighlight' },
+        { 'gzn', desc = 'Surround update [N] lines' },
       },
     },
   },
@@ -808,7 +816,17 @@ require('lazy').setup({
       -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
-      require('mini.surround').setup()
+      require('mini.surround').setup {
+        mappings = {
+          add = 'gza',
+          delete = 'gzd',
+          replace = 'gzr',
+          find = 'gzf',
+          find_left = 'gzF',
+          highlight = 'gzh',
+          update_n_lines = 'gzn',
+        },
+      }
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
