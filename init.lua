@@ -245,22 +245,15 @@ require('lazy').setup({
 
   {
     'kdheepak/lazygit.nvim',
-    cmd = {
-      'LazyGit',
-      'LazyGitConfig',
-      'LazyGitCurrentFile',
-      'LazyGitFilter',
-      'LazyGitFilterCurrentFile',
-    },
+    cmd = require('kickstart.plugins.lazygit.config').commands,
     -- optional for floating window border decoration
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-    },
+    dependencies = require('kickstart.plugins.lazygit.config').dependencies,
     -- setting the keybinding for LazyGit with 'keys' is recommended in
     -- order to load the plugin when the command is run for the first time
-    keys = {
-      { '<leader>vv', '<cmd>LazyGit<cr>', desc = 'Open lazy git' },
-    },
+    keys = require('kickstart.plugins.lazygit.keymaps').get,
+    config = function()
+      require('kickstart.plugins.lazygit.config').setup()
+    end,
   },
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -363,34 +356,7 @@ require('lazy').setup({
   --
   -- Use the `dependencies` key to specify the dependencies of a particular plugin
 
-  { -- Fuzzy Finder (files, lsp, etc)
-    'nvim-telescope/telescope.nvim',
-    event = 'VimEnter',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      { -- If encountering errors, see telescope-fzf-native README for installation instructions
-        'nvim-telescope/telescope-fzf-native.nvim',
-
-        -- `build` is used to run some command when the plugin is installed/updated.
-        -- This is only run then, not every time Neovim starts up.
-        build = 'make',
-
-        -- `cond` is a condition used to determine whether this plugin should be
-        -- installed and loaded.
-        cond = function()
-          return vim.fn.executable 'make' == 1
-        end,
-      },
-      { 'nvim-telescope/telescope-ui-select.nvim' },
-
-      -- Useful for getting pretty icons, but requires a Nerd Font.
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
-    },
-    config = function()
-      require('kickstart.plugins.telescope.config').setup()
-      require('kickstart.plugins.telescope.keymaps').setup()
-    end,
-  },
+  require 'kickstart.plugins.telescope',
 
   -- LSP Plugins
   {
