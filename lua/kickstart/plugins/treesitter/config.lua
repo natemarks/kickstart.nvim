@@ -10,15 +10,7 @@ M.opts = {
   indent = { enable = true, disable = { 'ruby' } },
 }
 
-local function ensure_data_site_in_rtp()
-  local data_site_path = vim.fn.stdpath 'data' .. '/site'
-  if not vim.tbl_contains(vim.opt.rtp:get(), data_site_path) then
-    vim.opt.rtp:append(data_site_path)
-  end
-end
-
 function M.setup()
-  ensure_data_site_in_rtp()
   require('nvim-treesitter').setup(M.opts)
 end
 

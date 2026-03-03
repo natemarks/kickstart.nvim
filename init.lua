@@ -225,6 +225,11 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
+local data_site_path = vim.fn.stdpath 'data' .. '/site'
+if not vim.tbl_contains(vim.opt.rtp:get(), data_site_path) then
+  vim.opt.rtp:append(data_site_path)
+end
+
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
