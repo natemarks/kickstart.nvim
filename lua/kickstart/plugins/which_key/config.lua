@@ -39,7 +39,7 @@ return {
     { '<leader>f', group = '[F]ind' },
     { '<leader>w', group = '[W]orkspace' },
     { '<leader>s', group = '[S]ave' },
-    { '<leader>s', desc = '[S]ave current buffer' },
+    { '<leader>ss', desc = '[S]ave current buffer' },
     { '<leader>sa', desc = '[S]ave [A]ll buffers' },
     { '<leader>t', group = '[T]oggle' },
     { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },

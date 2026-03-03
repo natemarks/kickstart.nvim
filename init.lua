@@ -682,8 +682,8 @@ require('lazy').setup({
 })
 
 -- Quicksave command
-vim.keymap.set('n', '<leader>s', ':update<CR>', { noremap = true, desc = 'Write current buffer' })
-vim.keymap.set('v', '<leader>s', '<C-C>:update<CR>', { noremap = true, desc = 'Write current buffer' })
+vim.keymap.set('n', '<leader>ss', ':update<CR>', { noremap = true, desc = 'Write current buffer' })
+vim.keymap.set('v', '<leader>ss', '<C-C>:update<CR>', { noremap = true, desc = 'Write current buffer' })
 vim.keymap.set('n', '<leader>sa', ':wall<CR>', { noremap = true, desc = 'Write all buffers' })
 
 -- Quick quit command
