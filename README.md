@@ -1,5 +1,7 @@
 # kickstart.nvimA
 
+IMPORTANT:  Tested on neovim 0.11.6
+
 
 PROBHLEM: install fd for checkhealt
 PROBLEM : fully support gotmpl anf gowork form checkhealth error

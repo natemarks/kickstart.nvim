@@ -113,6 +113,9 @@ vim.opt.mouse = ''
 -- vim.opt.showmode = false
 vim.opt.showmode = true
 
+-- Enable 24-bit RGB color in supported terminals
+vim.opt.termguicolors = true
+
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
