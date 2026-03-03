@@ -39,3 +39,11 @@ Open non-LSP filetypes to confirm no unexpected LSP attach.
 Save/reopen to ensure no autocommand duplication (highlights, detach cleanup).
 If you want, I can turn this into a runnable checklist file in the repo (e.g., docs/lsp-migration-test-plan.md).
 
+## treesitter
+treesitter has special path requirememnts  use checkhealth to see if this error is present :
+NOTE: it's present immediately after nv starts, but wait a minute to run :checkhealth
+```
+179 - /home/natepm/.local/share/nvim/site/
+1 - ✅ OK is writable.
+2 - ❌ ERROR is not in runtimepath
+```
