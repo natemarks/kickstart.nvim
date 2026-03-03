@@ -556,13 +556,15 @@ require('lazy').setup({
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup {
         mappings = {
-          add = 'gza',
-          delete = 'gzd',
-          replace = 'gzr',
-          find = 'gzf',
-          find_left = 'gzF',
-          highlight = 'gzh',
-          update_n_lines = 'gzn',
+          add = 'gsa',
+          delete = 'gsd',
+          replace = 'gsr',
+          find = 'gsf',
+          find_left = 'gsF',
+          highlight = 'gsh',
+          update_n_lines = 'gsn',
+          suffix_next = '',
+          suffix_last = '',
         },
       }
 
