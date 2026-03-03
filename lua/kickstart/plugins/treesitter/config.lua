@@ -3,7 +3,7 @@ local M = {}
 local data_site_path = vim.fn.stdpath 'data' .. '/site/'
 
 M.opts = {
-  ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+  ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'python', 'query', 'vim', 'vimdoc' },
   parser_install_dir = data_site_path,
   auto_install = true,
   highlight = {
