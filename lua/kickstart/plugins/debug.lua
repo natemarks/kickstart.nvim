@@ -51,6 +51,25 @@ return {
     local dap = require 'dap'
     local dapui = require 'dapui'
 
+    local function resolve_python_for_debugpy()
+      local mason_debugpy_python = vim.fn.expand(vim.fn.stdpath 'data' .. '/mason/packages/debugpy/venv/bin/python')
+      if vim.fn.executable(mason_debugpy_python) == 1 then
+        return mason_debugpy_python
+      end
+
+      local python3 = vim.fn.exepath 'python3'
+      if python3 ~= '' then
+        return python3
+      end
+
+      local python = vim.fn.exepath 'python'
+      if python ~= '' then
+        return python
+      end
+
+      return nil
+    end
+
     require('mason-nvim-dap').setup {
       -- Makes a best effort to setup the various debuggers with
       -- reasonable debug configurations
@@ -67,6 +86,15 @@ return {
         'delve',
       },
     }
+
+    local python_for_debugpy = resolve_python_for_debugpy()
+    if python_for_debugpy then
+      dap.adapters.python = {
+        type = 'executable',
+        command = python_for_debugpy,
+        args = { '-m', 'debugpy.adapter' },
+      }
+    end
 
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|
