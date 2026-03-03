@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 .PHONY: shellcheck restore deploy test-nvim
-DEFAULT_BRANCH := master
+BRANCH := master
 SHELL := /bin/bash
 PRJ := $(PWD)
 COMMIT := $(shell git rev-parse HEAD)
@@ -24,7 +24,7 @@ restore: ## restore original config and share
 	bash scripts/restore.sh
 
 deploy: ## restore original config and share
-	bash scripts/deploy.sh $(DEFAULT_BRANCH)
+	bash scripts/deploy.sh $(BRANCH)
 
 test-nvim: ## run nvim with this project's init.lua/runtimepath
 	nvim -u "$(PRJ)/init.lua" --cmd "set runtimepath^=$(PRJ)"
