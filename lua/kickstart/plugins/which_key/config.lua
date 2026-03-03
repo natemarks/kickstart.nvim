@@ -37,6 +37,7 @@ return {
     { '<leader>d', group = '[D]ocument' },
     { '<leader>r', group = '[R]ename' },
     { '<leader>f', group = '[F]ind' },
+    { '<leader>ft', desc = '[F]ind [T]odos' },
     { '<leader>w', group = '[W]orkspace' },
     { '<leader>s', group = '[S]ave' },
     { '<leader>ss', desc = '[S]ave current buffer' },
