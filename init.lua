@@ -225,6 +225,9 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
+-- Keep Neovim's data site dir on runtimepath so Treesitter parsers/queries
+-- installed under stdpath('data')/site are discoverable even if Treesitter
+-- initializes later via lazy loading.
 local data_site_path = vim.fn.stdpath 'data' .. '/site'
 if not vim.tbl_contains(vim.opt.rtp:get(), data_site_path) then
   vim.opt.rtp:append(data_site_path)
