@@ -426,33 +426,7 @@ require('lazy').setup({
   require 'kickstart.plugins.harpoon',
   require 'kickstart.plugins.mini',
   require 'kickstart.plugins.treesitter',
-  {
-    'nvim-neotest/neotest',
-    dependencies = {
-      'nvim-neotest/nvim-nio',
-      'nvim-lua/plenary.nvim',
-      'antoinemadec/FixCursorHold.nvim',
-      'nvim-treesitter/nvim-treesitter',
-      'nvim-neotest/neotest-go',
-      'nvim-neotest/neotest-python',
-      'nvim-neotest/neotest-plenary',
-      'nvim-neotest/neotest-vim-test',
-    },
-    config = function()
-      require('neotest').setup {
-        adapters = {
-          require 'neotest-python' {
-            dap = { justMyCode = false },
-          },
-          require 'neotest-go',
-          require 'neotest-plenary',
-          require 'neotest-vim-test' {
-            ignore_file_types = { 'python', 'vim', 'lua' },
-          },
-        },
-      }
-    end,
-  },
+  require 'kickstart.plugins.neotest',
   {
     'sindrets/diffview.nvim',
     -- cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
@@ -463,13 +437,6 @@ require('lazy').setup({
   {
     'github/copilot.vim',
   },
-  {
-    'nvim-neotest/neotest-python',
-    dependencies = {
-      'nvim-neotest/neotest',
-    },
-  },
-
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
   -- place them in the correct locations.
@@ -529,22 +496,5 @@ vim.keymap.set('n', '<leader>sa', ':wall<CR>', { noremap = true, desc = 'Write a
 -- Quick quit command
 vim.keymap.set('n', '<Leader>e', ':quit<CR>', { noremap = true }) -- Quit current window
 vim.keymap.set('n', '<Leader>E', ':qa!<CR>', { noremap = true }) -- Quit all windows
-
-local nt = require 'neotest'
-vim.keymap.set('n', '<leader>xt', function()
-  nt.run.run()
-end, { desc = 'Run nearest test' })
-
-vim.keymap.set('n', '<leader>xs', function()
-  nt.run.run()
-end, { desc = 'Stop nearest test' })
-
-vim.keymap.set('n', '<leader>xd', function()
-  nt.run.run { strategy = 'dap' }
-end, { desc = 'Debug nearest test' })
-
-vim.keymap.set('n', '<leader>xf', function()
-  nt.run.run(vim.fn.expand '%')
-end, { desc = 'Run tests in file' })
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

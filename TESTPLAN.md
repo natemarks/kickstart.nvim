@@ -117,3 +117,51 @@ Goal: confirm the completion refactor keeps behavior unchanged.
 - If make does not exist, confirm startup and completion still work.
 
 Pass criteria: no new startup errors, same completion/snippet UX, expected sources available.
+
+## Neotest
+
+Goal: verify neotest plugin wiring, adapters, keymaps, and debug flow after extraction.
+
+1) Startup / plugin load
+
+- Launch Neovim and run :messages.
+- Confirm no startup errors mentioning kickstart.plugins.neotest.
+- Run :Lazy and verify neotest stack is installed:
+  - nvim-neotest/neotest
+  - nvim-neotest/neotest-python
+  - nvim-neotest/neotest-go
+  - nvim-neotest/neotest-plenary
+  - nvim-neotest/neotest-vim-test
+
+2) Adapter sanity checks
+
+- Open a Python test file and run :lua require('neotest').run.run().
+- Open a Go test file and run :lua require('neotest').run.run().
+- Confirm tests start through the correct adapter for each language.
+
+3) Keymap checks
+
+- Verify these keymaps work in normal mode:
+  - <leader>xt = run nearest test
+  - <leader>xs = stop nearest test (current config calls run; confirm intended behavior)
+  - <leader>xd = debug nearest test (DAP strategy)
+  - <leader>xf = run tests in current file
+
+4) DAP integration check
+
+- Run <leader>xd in a Python test file.
+- Confirm debug session starts and no adapter executable/path warnings appear.
+
+5) Output and state checks
+
+- Trigger a passing and failing test.
+- Verify neotest output/summary updates and failures are visible.
+- Re-run after editing a test to confirm state refresh works.
+
+6) Regression checks
+
+- Restart Neovim and repeat one Python + one Go run.
+- Ensure no duplicate keymaps or duplicate adapter registrations.
+- Confirm no circular dependency symptoms (load order issues, delayed adapters, missing commands).
+
+Pass criteria: all neotest keymaps execute, Python/Go adapters run, DAP debug path works, and no startup/runtime warnings are introduced.
