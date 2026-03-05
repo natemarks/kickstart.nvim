@@ -123,6 +123,26 @@ Read through the `init.lua` file in your configuration folder for more
 information about extending and exploring Neovim. That also includes
 examples of adding popularly requested plugins.
 
+## Config Layout (This Fork)
+
+This fork uses a custom-first module layout:
+
+- `lua/custom/` is the primary namespace for your maintained config modules
+  (LSP, plugin configs, keymaps, snippets, etc).
+- `lua/kickstart/` is reduced to an explicit vendor set of plugin specs that
+  are intentionally kept as-is.
+
+Current vendor plugin specs intentionally kept under `lua/kickstart/plugins/`:
+
+- `autopairs.lua`
+- `debug.lua`
+- `gitsigns.lua`
+- `indent_line.lua`
+- `lint.lua`
+- `neo-tree.lua`
+
+Everything else has been migrated to `lua/custom/...` and imported from there.
+
 
 ### Getting Started
 
