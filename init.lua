@@ -228,12 +228,16 @@ vim.opt.rtp:prepend(lazypath)
 -- Keep Neovim's data site dir on runtimepath so Treesitter parsers/queries
 -- installed under stdpath('data')/site are discoverable even if Treesitter
 -- initializes later via lazy loading.
-local data_site_path = vim.fn.stdpath 'data' .. '/site/'
-local data_site_path_no_slash = data_site_path:gsub('/+$', '')
-local rtp_paths = vim.opt.rtp:get()
-if not vim.tbl_contains(rtp_paths, data_site_path) and not vim.tbl_contains(rtp_paths, data_site_path_no_slash) then
-  vim.opt.rtp:append(data_site_path)
+local function ensure_data_site_in_rtp()
+  local data_site_path = vim.fn.stdpath 'data' .. '/site/'
+  local data_site_path_no_slash = data_site_path:gsub('/+$', '')
+  local rtp_paths = vim.opt.rtp:get()
+  if not vim.tbl_contains(rtp_paths, data_site_path) and not vim.tbl_contains(rtp_paths, data_site_path_no_slash) then
+    vim.opt.rtp:append(data_site_path)
+  end
 end
+
+ensure_data_site_in_rtp()
 
 -- [[ Configure and install plugins ]]
 --
@@ -480,6 +484,9 @@ require('lazy').setup({
     },
   },
 })
+
+-- lazy.nvim can reset runtimepath during setup; ensure this remains present.
+ensure_data_site_in_rtp()
 
 -- Quicksave command
 vim.keymap.set('n', '<leader>ss', ':update<CR>', { noremap = true, desc = 'Write current buffer' })
