@@ -10,7 +10,7 @@ return {
     'nvim-neotest/neotest-plenary',
   },
   config = function()
-    require('kickstart.plugins.neotest.config').setup()
-    require('kickstart.plugins.neotest.keymaps').setup()
+    require('custom.plugins.neotest.config').setup()
+    require('custom.plugins.neotest.keymaps').setup()
   end,
 }

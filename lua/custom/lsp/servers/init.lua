@@ -4,9 +4,9 @@ function M.get()
   local servers = {}
 
   local modules = {
-    require 'kickstart.lsp.servers.go',
-    require 'kickstart.lsp.servers.python',
-    require 'kickstart.lsp.servers.lua',
+    require 'custom.lsp.servers.go',
+    require 'custom.lsp.servers.python',
+    require 'custom.lsp.servers.lua',
   }
 
   for _, module in ipairs(modules) do

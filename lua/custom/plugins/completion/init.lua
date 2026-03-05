@@ -1,4 +1,4 @@
-local luasnip_config = require 'kickstart.plugins.completion.luasnip'
+local luasnip_config = require 'custom.plugins.completion.luasnip'
 
 return {
   'hrsh7th/nvim-cmp',
@@ -22,6 +22,6 @@ return {
   },
   config = function()
     luasnip_config.setup()
-    require('kickstart.plugins.completion.cmp').setup()
+    require('custom.plugins.completion.cmp').setup()
   end,
 }

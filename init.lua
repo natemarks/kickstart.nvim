@@ -228,12 +228,16 @@ vim.opt.rtp:prepend(lazypath)
 -- Keep Neovim's data site dir on runtimepath so Treesitter parsers/queries
 -- installed under stdpath('data')/site are discoverable even if Treesitter
 -- initializes later via lazy loading.
-local data_site_path = vim.fn.stdpath 'data' .. '/site/'
-local data_site_path_no_slash = data_site_path:gsub('/+$', '')
-local rtp_paths = vim.opt.rtp:get()
-if not vim.tbl_contains(rtp_paths, data_site_path) and not vim.tbl_contains(rtp_paths, data_site_path_no_slash) then
-  vim.opt.rtp:append(data_site_path)
+local function ensure_data_site_in_rtp()
+  local data_site_path = vim.fn.stdpath 'data' .. '/site/'
+  local data_site_path_no_slash = data_site_path:gsub('/+$', '')
+  local rtp_paths = vim.opt.rtp:get()
+  if not vim.tbl_contains(rtp_paths, data_site_path) and not vim.tbl_contains(rtp_paths, data_site_path_no_slash) then
+    vim.opt.rtp:append(data_site_path)
+  end
 end
+
+ensure_data_site_in_rtp()
 
 -- [[ Configure and install plugins ]]
 --
@@ -251,21 +255,21 @@ require('lazy').setup({
   {
     'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
     config = function()
-      require('kickstart.plugins.sleuth.config').setup()
-      require('kickstart.plugins.sleuth.keymaps').setup()
+      require('custom.plugins.sleuth.config').setup()
+      require('custom.plugins.sleuth.keymaps').setup()
     end,
   },
 
   {
     'kdheepak/lazygit.nvim',
-    cmd = require('kickstart.plugins.lazygit.config').commands,
+    cmd = require('custom.plugins.lazygit.config').commands,
     -- optional for floating window border decoration
-    dependencies = require('kickstart.plugins.lazygit.config').dependencies,
+    dependencies = require('custom.plugins.lazygit.config').dependencies,
     -- setting the keybinding for LazyGit with 'keys' is recommended in
     -- order to load the plugin when the command is run for the first time
-    keys = require('kickstart.plugins.lazygit.keymaps').get,
+    keys = require('custom.plugins.lazygit.keymaps').get,
     config = function()
-      require('kickstart.plugins.lazygit.config').setup()
+      require('custom.plugins.lazygit.config').setup()
     end,
   },
   -- NOTE: Plugins can also be added by using a table,
@@ -311,7 +315,7 @@ require('lazy').setup({
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
-    opts = require 'kickstart.plugins.which_key.config',
+    opts = require 'custom.plugins.which_key.config',
   },
 
   -- NOTE: Plugins can specify dependencies.
@@ -321,7 +325,7 @@ require('lazy').setup({
   --
   -- Use the `dependencies` key to specify the dependencies of a particular plugin
 
-  require 'kickstart.plugins.telescope',
+  require 'custom.plugins.telescope',
 
   -- LSP Plugins
   {
@@ -354,7 +358,7 @@ require('lazy').setup({
       'hrsh7th/cmp-nvim-lsp',
     },
     config = function()
-      require('kickstart.lsp').setup()
+      require('custom.lsp').setup()
     end,
   },
 
@@ -401,7 +405,7 @@ require('lazy').setup({
   --   },
   -- },
 
-  require 'kickstart.plugins.completion',
+  require 'custom.plugins.completion',
 
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
@@ -423,10 +427,10 @@ require('lazy').setup({
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
-  require 'kickstart.plugins.harpoon',
-  require 'kickstart.plugins.mini',
-  require 'kickstart.plugins.treesitter',
-  require 'kickstart.plugins.neotest',
+  require 'custom.plugins.harpoon',
+  require 'custom.plugins.mini',
+  require 'custom.plugins.treesitter',
+  require 'custom.plugins.neotest',
   {
     'sindrets/diffview.nvim',
     -- cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
@@ -434,15 +438,12 @@ require('lazy').setup({
       require('diffview').setup()
     end,
   },
-  require 'kickstart.plugins.copilot',
-  -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
-  -- init.lua. If you want these files, they are in the repository, so you can just download them and
-  -- place them in the correct locations.
-
-  -- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
+  require 'custom.plugins.copilot',
+  -- These plugin specs intentionally remain in `lua/kickstart/plugins/*.lua`
+  -- while most other modules live under `lua/custom`.
   --
-  --  Here are some example plugins that I've included in the Kickstart repository.
-  --  Uncomment any of the lines below to enable them (you will need to restart nvim).
+  -- NOTE: Keep this list as the explicit "vendor" plugin set.
+  --  Uncomment `lint` below if you want to enable it.
   --
   require 'kickstart.plugins.debug',
   require 'kickstart.plugins.indent_line',
@@ -451,10 +452,8 @@ require('lazy').setup({
   require 'kickstart.plugins.neo-tree',
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
-  -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-  --    This is the easiest way to modularize your config.
-  --
-  --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
+  -- NOTE: The import below auto-loads plugin specs from `lua/custom/plugins/*.lua`.
+  -- This is your primary customization surface.
   { import = 'custom.plugins' },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
@@ -485,6 +484,9 @@ require('lazy').setup({
     },
   },
 })
+
+-- lazy.nvim can reset runtimepath during setup; ensure this remains present.
+ensure_data_site_in_rtp()
 
 -- Quicksave command
 vim.keymap.set('n', '<leader>ss', ':update<CR>', { noremap = true, desc = 'Write current buffer' })

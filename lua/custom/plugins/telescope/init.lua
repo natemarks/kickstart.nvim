@@ -14,7 +14,7 @@ return {
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
   },
   config = function()
-    require('kickstart.plugins.telescope.config').setup()
-    require('kickstart.plugins.telescope.keymaps').setup()
+    require('custom.plugins.telescope.config').setup()
+    require('custom.plugins.telescope.keymaps').setup()
   end,
 }

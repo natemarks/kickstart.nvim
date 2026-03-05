@@ -4,7 +4,7 @@ function M.setup(servers, capabilities)
   require('mason').setup()
 
   local ensure_installed = vim.tbl_keys(servers or {})
-  vim.list_extend(ensure_installed, require('kickstart.lsp.tools').get())
+  vim.list_extend(ensure_installed, require('custom.lsp.tools').get())
   require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
   require('mason-lspconfig').setup {
