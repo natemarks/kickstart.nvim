@@ -19,6 +19,8 @@ stylus: ## run stylua formatter
 	( \
        stylua .; \
     )
+checkout: ## checkout branch to config without touching cache
+	bash scripts/checkout.sh $(BRANCH)
 
 restore: ## restore original config and share
 	bash scripts/restore.sh
