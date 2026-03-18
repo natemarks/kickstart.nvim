@@ -10,6 +10,7 @@ return {
       lua = true,
       python = true,
       go = true,
+      sh = true,
       make = true,
       makefile = true,
     }
