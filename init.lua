@@ -135,9 +135,18 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 -- Always enable English spellchecking
+local spell_dir = vim.fn.stdpath 'config' .. '/spell'
+if vim.fn.isdirectory(spell_dir) == 0 then
+  vim.fn.mkdir(spell_dir, 'p')
+end
+local spellfile_path = spell_dir .. '/en.utf-8.add'
+if vim.fn.filereadable(spellfile_path) == 0 then
+  vim.fn.writefile({}, spellfile_path)
+end
+
 vim.opt.spell = true
 vim.opt.spelllang = { 'en_us' }
-vim.opt.spellfile = vim.fn.stdpath 'config' .. '/spell/en.utf-8.add'
+vim.opt.spellfile = spellfile_path
 
 -- Keep signcolumn on by default
 vim.opt.signcolumn = 'yes'
