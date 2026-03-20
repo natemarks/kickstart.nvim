@@ -134,6 +134,11 @@ vim.opt.undofile = false
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
+-- Always enable English spellchecking
+vim.opt.spell = true
+vim.opt.spelllang = { 'en_us' }
+vim.opt.spellfile = vim.fn.stdpath 'config' .. '/spell/en.utf-8.add'
+
 -- Keep signcolumn on by default
 vim.opt.signcolumn = 'yes'
 
@@ -210,6 +215,15 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
     vim.highlight.on_yank()
+  end,
+})
+
+vim.api.nvim_create_autocmd({ 'BufWinEnter', 'WinEnter' }, {
+  desc = 'Keep English spellchecking enabled',
+  group = vim.api.nvim_create_augroup('kickstart-force-english-spell', { clear = true }),
+  callback = function()
+    vim.opt_local.spell = true
+    vim.opt_local.spelllang = { 'en_us' }
   end,
 })
 
@@ -492,6 +506,10 @@ ensure_data_site_in_rtp()
 vim.keymap.set('n', '<leader>ss', ':update<CR>', { noremap = true, desc = 'Write current buffer' })
 vim.keymap.set('v', '<leader>ss', '<C-C>:update<CR>', { noremap = true, desc = 'Write current buffer' })
 vim.keymap.set('n', '<leader>sa', ':wall<CR>', { noremap = true, desc = 'Write all buffers' })
+
+vim.keymap.set('n', '<leader>ts', function()
+  vim.opt_local.spell = not vim.opt_local.spell:get()
+end, { desc = '[T]oggle [S]pellcheck' })
 
 -- Quick quit command
 vim.keymap.set('n', '<Leader>e', ':quit<CR>', { noremap = true }) -- Quit current window

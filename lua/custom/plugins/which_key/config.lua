@@ -43,6 +43,7 @@ return {
     { '<leader>ss', desc = '[S]ave current buffer' },
     { '<leader>sa', desc = '[S]ave [A]ll buffers' },
     { '<leader>t', group = '[T]oggle' },
+    { '<leader>ts', desc = '[T]oggle [S]pellcheck' },
     { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
     { '<M-l>', desc = 'Copilot: Accept suggestion', mode = 'i' },
     { '<M-.>', desc = 'Copilot: Next suggestion', mode = 'i' },
