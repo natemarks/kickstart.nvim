@@ -127,8 +127,12 @@ end)
 -- Enable break indent
 vim.opt.breakindent = true
 
--- Save undo history
+-- Avoid writing editing artifacts/history to disk
+vim.opt.swapfile = false
+vim.opt.backup = false
+vim.opt.writebackup = false
 vim.opt.undofile = false
+vim.opt.shadafile = 'NONE'
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
