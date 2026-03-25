@@ -13,7 +13,6 @@ return {
       sh = true,
       make = true,
       makefile = true,
-      markdown = true,
     }
 
     vim.keymap.set('i', '<M-l>', 'copilot#Accept("")', {
