@@ -192,10 +192,9 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
-vim.keymap.set('n', '<leader>?', function()
+local function open_readonly_doc_in_tab(path, close_desc)
   local origin_tab = vim.api.nvim_get_current_tabpage()
-  local cheatsheet_path = vim.fn.expand '~/.config/nvim/WHICHKEY-CHEATSHEET.md'
-  vim.cmd('tabnew ' .. vim.fn.fnameescape(cheatsheet_path))
+  vim.cmd('tabnew ' .. vim.fn.fnameescape(path))
   vim.bo.readonly = true
   vim.bo.modifiable = false
 
@@ -204,8 +203,18 @@ vim.keymap.set('n', '<leader>?', function()
     if vim.api.nvim_tabpage_is_valid(origin_tab) then
       vim.api.nvim_set_current_tabpage(origin_tab)
     end
-  end, { buffer = true, silent = true, desc = 'Close cheatsheet tab' })
+  end, { buffer = true, silent = true, desc = close_desc })
+end
+
+vim.keymap.set('n', '<leader>?', function()
+  local cheatsheet_path = vim.fn.stdpath 'config' .. '/WHICHKEY-CHEATSHEET.md'
+  open_readonly_doc_in_tab(cheatsheet_path, 'Close WhichKey cheatsheet tab')
 end, { desc = 'Open WhichKey cheatsheet in new tab (read-only)' })
+
+vim.keymap.set('n', '<leader>g?', function()
+  local fugitive_doc_path = vim.fn.stdpath 'config' .. '/FUGITIVE.md'
+  open_readonly_doc_in_tab(fugitive_doc_path, 'Close Fugitive docs tab')
+end, { desc = 'Open Fugitive workflow doc in new tab (read-only)' })
 
 -- NM: do I ever need built terminal
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier

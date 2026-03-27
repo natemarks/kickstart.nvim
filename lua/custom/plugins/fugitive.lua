@@ -40,7 +40,7 @@ return {
       { '<leader>gg', '<cmd>Git<CR>', desc = '[G]it status' },
       { '<leader>gs', '<cmd>Git add %<CR>', desc = '[G]it [S]tage file' },
       { '<leader>gS', '<cmd>Git add -p -- %<CR>', desc = '[G]it [S]tage hunk (patch)' },
-      { '<leader>gc', '<cmd>Git commit<CR>', desc = '[G]it [C]ommit' },
+      { '<leader>gc', '<cmd>Git commit -v<CR>', desc = '[G]it [C]ommit (verbose diff)' },
       { '<leader>gC', '<cmd>Git commit --amend<CR>', desc = '[G]it amend last [C]ommit' },
       { '<leader>gb', input_git { prompt = 'Switch to branch: ', command_prefix = 'switch' }, desc = '[G]it [B]ranch checkout' },
       { '<leader>gB', input_git { prompt = 'Create and switch to branch: ', command_prefix = 'switch -c' }, desc = '[G]it create [B]ranch' },

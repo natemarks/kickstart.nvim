@@ -11,6 +11,7 @@ This cheatsheet reflects the current keymaps in this config.
 | Key | Mode | What it does |
 | --- | --- | --- |
 | `<leader>?` | Normal | Open this cheatsheet in a new read-only tab. |
+| `<leader>g?` | Normal | Open `FUGITIVE.md` in a new read-only tab. |
 
 ## Core
 
@@ -48,16 +49,17 @@ This cheatsheet reflects the current keymaps in this config.
 | Key | Mode | What it does |
 | --- | --- | --- |
 | `<leader>gg` | Normal | Open Fugitive status (`:Git`). |
+| `<leader>g?` | Normal | Open `FUGITIVE.md` in a new read-only tab. |
 | `<leader>gs` | Normal | Stage current file (`git add %`). |
 | `<leader>gS` | Normal | Stage hunks interactively (`git add -p`). |
-| `<leader>gc` | Normal | Commit staged changes. |
+| `<leader>gc` | Normal | Commit staged changes with verbose diff in message buffer (`git commit -v`). |
 | `<leader>gC` | Normal | Amend last commit. |
 | `<leader>gb` | Normal | Switch branch (prompts for branch name). |
 | `<leader>gB` | Normal | Create + switch branch (prompts for name). |
 | `<leader>gp` | Normal | Push current branch. |
 | `<leader>gu` | Normal | Pull updates. |
 | `<leader>gl` | Normal | Blame current file. |
-| `<leader>gd` | Normal | Diff split (`:Gdiffsplit`). |
+| `<leader>gd` | Normal | Diff split for current file (`:Gdiffsplit`). |
 | `<leader>gr` | Normal | Interactive rebase (default base `HEAD~3`). |
 | `<leader>gX` | Normal | Discard current file changes with confirmation. |
 
@@ -171,3 +173,4 @@ This cheatsheet reflects the current keymaps in this config.
 - `:WhichKey ,` -> open leader-key tree directly.
 - `,fk` -> Telescope keymaps picker (searchable cheatsheet).
 - `,?` -> open `~/.config/nvim/WHICHKEY-CHEATSHEET.md` in a new read-only tab.
+- `,g?` -> open `~/.config/nvim/FUGITIVE.md` in a new read-only tab.
