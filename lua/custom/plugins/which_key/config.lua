@@ -39,6 +39,7 @@ return {
     { '<leader>f', group = '[F]ind' },
     { '<leader>fb', desc = '[F]ind Git [B]ranches' },
     { '<leader>ft', desc = '[F]ind [T]odos' },
+    { '<leader>?', desc = 'Open WhichKey cheatsheet in new tab (read-only)' },
     { '<leader>w', group = '[W]orkspace' },
     { '<leader>s', group = '[S]ave' },
     { '<leader>ss', desc = '[S]ave current buffer' },

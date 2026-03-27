@@ -6,6 +6,12 @@ This cheatsheet reflects the current keymaps in this config.
 - Local leader key: `,`
 - Tip: press `,` and pause to open WhichKey for leader mappings.
 
+## Quick Help
+
+| Key | Mode | What it does |
+| --- | --- | --- |
+| `<leader>?` | Normal | Open this cheatsheet in a new read-only tab. |
+
 ## Core
 
 | Key | Mode | What it does |
@@ -164,3 +170,4 @@ This cheatsheet reflects the current keymaps in this config.
 - `:WhichKey` -> open top-level popup.
 - `:WhichKey ,` -> open leader-key tree directly.
 - `,fk` -> Telescope keymaps picker (searchable cheatsheet).
+- `,?` -> open `~/.config/nvim/WHICHKEY-CHEATSHEET.md` in a new read-only tab.
