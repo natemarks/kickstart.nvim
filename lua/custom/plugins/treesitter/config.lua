@@ -1,6 +1,7 @@
 local M = {}
 
 local data_site_path = vim.fn.stdpath 'data' .. '/site/'
+local has_tree_sitter_cli = vim.fn.executable 'tree-sitter' == 1
 
 -- Fresh deploys may occasionally start before all parsers are present.
 -- This guard installs python automatically when missing so neotest discovery
@@ -10,6 +11,16 @@ local data_site_path = vim.fn.stdpath 'data' .. '/site/'
 local function ensure_python_parser_installed()
   local parser_paths = vim.api.nvim_get_runtime_file('parser/python.so', true)
   if #parser_paths > 0 then
+    return
+  end
+
+  if not has_tree_sitter_cli then
+    vim.schedule(function()
+      vim.notify(
+        "Treesitter python parser is missing, but 'tree-sitter' CLI is not installed. Install it, then run :TSInstall python.",
+        vim.log.levels.WARN
+      )
+    end)
     return
   end
 
@@ -24,7 +35,7 @@ end
 M.opts = {
   ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'python', 'query', 'vim', 'vimdoc' },
   parser_install_dir = data_site_path,
-  auto_install = true,
+  auto_install = has_tree_sitter_cli,
   highlight = {
     enable = true,
     additional_vim_regex_highlighting = { 'ruby' },
