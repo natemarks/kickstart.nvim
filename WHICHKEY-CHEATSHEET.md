@@ -153,6 +153,8 @@ This cheatsheet reflects the current keymaps in this config.
 
 | Key | Mode | What it does |
 | --- | --- | --- |
+| `gqap` | Normal | Format a paragraph (`ap` text object). Example: place cursor in a wrapped paragraph and press `gqap`. |
+| `gq{motion}` | Normal | Format text covered by a motion. Example: `gq}` formats from cursor to end of paragraph. |
 | `gsa` | Normal | Add surround (mini.surround). |
 | `gsd` | Normal | Delete surround. |
 | `gsr` | Normal | Replace surround. |
