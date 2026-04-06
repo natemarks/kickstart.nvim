@@ -79,6 +79,13 @@ This cheatsheet reflects the current keymaps in this config.
 | `<leader>hd` | Normal | Diff against index. |
 | `<leader>hD` | Normal | Diff against `HEAD`. |
 
+## Yank (`<leader>y`)
+
+| Key | Mode | What it does |
+| --- | --- | --- |
+| `<leader>yp` | Normal | Copy current file path relative to project root (`.git`) to clipboard. |
+| `<leader>yf` | Normal | Copy current filename only (no path) to clipboard. |
+
 ## Save, Quit, Diagnostics, Toggle
 
 | Key | Mode | What it does |

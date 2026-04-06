@@ -241,6 +241,44 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+local function copy_to_clipboard(value, success_message)
+  vim.fn.setreg('+', value)
+  vim.notify(success_message, vim.log.levels.INFO)
+end
+
+vim.keymap.set('n', '<leader>yp', function()
+  local file_path = vim.api.nvim_buf_get_name(0)
+  if file_path == '' then
+    vim.notify('No file in current buffer', vim.log.levels.WARN)
+    return
+  end
+
+  local project_root = vim.fs.root(0, { '.git' }) or vim.fn.getcwd()
+  local absolute_file = vim.fs.normalize(vim.fn.fnamemodify(file_path, ':p'))
+  local absolute_root = vim.fs.normalize(vim.fn.fnamemodify(project_root, ':p'))
+  local root_prefix = absolute_root .. '/'
+
+  local value = absolute_file
+  if absolute_file == absolute_root then
+    value = vim.fn.fnamemodify(absolute_file, ':t')
+  elseif vim.startswith(absolute_file, root_prefix) then
+    value = absolute_file:sub(#root_prefix + 1)
+  end
+
+  copy_to_clipboard(value, 'Copied project-relative path: ' .. value)
+end, { desc = '[Y]ank file [P]ath (project-relative)' })
+
+vim.keymap.set('n', '<leader>yf', function()
+  local file_path = vim.api.nvim_buf_get_name(0)
+  if file_path == '' then
+    vim.notify('No file in current buffer', vim.log.levels.WARN)
+    return
+  end
+
+  local filename = vim.fn.fnamemodify(file_path, ':t')
+  copy_to_clipboard(filename, 'Copied filename: ' .. filename)
+end, { desc = '[Y]ank [F]ilename' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
