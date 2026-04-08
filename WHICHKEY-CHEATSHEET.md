@@ -12,6 +12,7 @@ This cheatsheet reflects the current keymaps in this config.
 | --- | --- | --- |
 | `<leader>?` | Normal | Open this cheatsheet in a new read-only tab. |
 | `<leader>g?` | Normal | Open `FUGITIVE.md` in a new read-only tab. |
+| `q` | Normal (in cheatsheet/docs tab) | Close the read-only tab and jump back to the tab you came from. |
 
 ## Core
 
@@ -23,6 +24,12 @@ This cheatsheet reflects the current keymaps in this config.
 | `<C-k>` | Normal | Focus upper split. |
 | `<C-l>` | Normal | Focus right split. |
 | `\\` | Normal | Reveal current file in Neo-tree. |
+
+## Neo-tree
+
+| Key | Mode | What it does |
+| --- | --- | --- |
+| `\\` | Normal (in Neo-tree window) | Close Neo-tree window. |
 
 ## Find (`<leader>f`)
 
@@ -85,6 +92,7 @@ This cheatsheet reflects the current keymaps in this config.
 | --- | --- | --- |
 | `<leader>yp` | Normal | Copy current file path relative to project root (`.git`) to clipboard. |
 | `<leader>yf` | Normal | Copy current filename only (no path) to clipboard. |
+| `<leader>ys` | Normal | Open project scratch in a new tab if the file already exists at `stdpath("state")/scratch/<project>-<hash>.md`; otherwise warn and do nothing. |
 
 ## Save, Quit, Diagnostics, Toggle
 

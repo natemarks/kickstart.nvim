@@ -279,6 +279,23 @@ vim.keymap.set('n', '<leader>yf', function()
   copy_to_clipboard(filename, 'Copied filename: ' .. filename)
 end, { desc = '[Y]ank [F]ilename' })
 
+vim.keymap.set('n', '<leader>ys', function()
+  local root = vim.fs.root(0, { '.git' }) or vim.fn.getcwd()
+  local normalized_root = vim.fs.normalize(vim.fn.fnamemodify(root, ':p'))
+  local base = vim.fn.fnamemodify(normalized_root, ':t')
+  local hash = vim.fn.sha256(normalized_root):sub(1, 8)
+  local scratch_file = string.format('%s/scratch/%s-%s.md', vim.fn.stdpath 'state', base, hash)
+
+  if vim.fn.filereadable(scratch_file) == 0 then
+    vim.notify('Scratch file does not exist: ' .. scratch_file, vim.log.levels.WARN)
+    vim.notify('Create it only after adding ignore rules', vim.log.levels.INFO)
+    return
+  end
+
+  vim.cmd 'tabnew'
+  vim.cmd('edit ' .. vim.fn.fnameescape(scratch_file))
+end, { desc = 'Open project [S]cratch (if exists)' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -587,7 +604,7 @@ vim.keymap.set('n', '<leader>ts', function()
 end, { desc = '[T]oggle [S]pellcheck' })
 
 -- Quick quit command
-vim.keymap.set('n', '<Leader>e', ':quit<CR>', { noremap = true }) -- Quit current window
-vim.keymap.set('n', '<Leader>E', ':qa!<CR>', { noremap = true }) -- Quit all windows
+vim.keymap.set('n', '<leader>e', ':quit<CR>', { noremap = true, desc = 'Quit current window' })
+vim.keymap.set('n', '<leader>E', ':qa!<CR>', { noremap = true, desc = 'Quit all windows' })
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
