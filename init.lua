@@ -280,11 +280,8 @@ vim.keymap.set('n', '<leader>yf', function()
 end, { desc = '[Y]ank [F]ilename' })
 
 vim.keymap.set('n', '<leader>ys', function()
-  local root = vim.fs.root(0, { '.git' }) or vim.fn.getcwd()
-  local normalized_root = vim.fs.normalize(vim.fn.fnamemodify(root, ':p'))
-  local base = vim.fn.fnamemodify(normalized_root, ':t')
-  local hash = vim.fn.sha256(normalized_root):sub(1, 8)
-  local scratch_file = string.format('%s/scratch/%s-%s.md', vim.fn.stdpath 'state', base, hash)
+  local current_dir = vim.fs.normalize(vim.fn.fnamemodify(vim.fn.getcwd(), ':p'))
+  local scratch_file = current_dir .. '/scratch.txt'
 
   if vim.fn.filereadable(scratch_file) == 0 then
     vim.notify('Scratch file does not exist: ' .. scratch_file, vim.log.levels.WARN)
@@ -294,7 +291,7 @@ vim.keymap.set('n', '<leader>ys', function()
 
   vim.cmd 'tabnew'
   vim.cmd('edit ' .. vim.fn.fnameescape(scratch_file))
-end, { desc = 'Open project [S]cratch (if exists)' })
+end, { desc = 'Open cwd [S]cratch (if exists)' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`

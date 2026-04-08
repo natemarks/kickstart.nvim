@@ -92,7 +92,7 @@ This cheatsheet reflects the current keymaps in this config.
 | --- | --- | --- |
 | `<leader>yp` | Normal | Copy current file path relative to project root (`.git`) to clipboard. |
 | `<leader>yf` | Normal | Copy current filename only (no path) to clipboard. |
-| `<leader>ys` | Normal | Open project scratch in a new tab if the file already exists at `stdpath("state")/scratch/<project>-<hash>.md`; otherwise warn and do nothing. |
+| `<leader>ys` | Normal | Open current-directory scratch in a new tab if `./scratch.txt` exists; otherwise warn and do nothing. |
 
 ## Save, Quit, Diagnostics, Toggle
 
