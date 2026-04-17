@@ -94,6 +94,12 @@ This cheatsheet reflects the current keymaps in this config.
 | `<leader>yf` | Normal | Copy current filename only (no path) to clipboard. |
 | `<leader>ys` | Normal | Open current-directory scratch in a new tab if `./scratch.txt` exists; otherwise warn and do nothing. |
 
+## Code (`<leader>c`)
+
+| Key | Mode | What it does |
+| --- | --- | --- |
+| `<leader>cj` | Normal | Format current buffer as JSON via `jq` and keep cursor/view position. |
+
 ## Save, Quit, Diagnostics, Toggle
 
 | Key | Mode | What it does |
