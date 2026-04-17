@@ -591,6 +591,33 @@ require('lazy').setup({
 -- lazy.nvim can reset runtimepath during setup; ensure this remains present.
 ensure_data_site_in_rtp()
 
+-- JSON formatting keymap (requires external `jq`).
+-- Keeps buffer unchanged when `jq` is missing or JSON is invalid.
+vim.keymap.set('n', '<leader>cj', function()
+  if vim.fn.executable 'jq' == 0 then
+    vim.notify("`jq` executable not found. Install jq to use <leader>cj.", vim.log.levels.ERROR)
+    return
+  end
+
+  local input = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), '\n')
+  local result = vim.system({ 'jq', '.' }, { stdin = input, text = true }):wait()
+
+  if result.code ~= 0 then
+    local error_message = (result.stderr or 'Failed to format JSON with jq'):gsub('%s+$', '')
+    vim.notify(error_message, vim.log.levels.ERROR)
+    return
+  end
+
+  local output = result.stdout or ''
+  if output:sub(-1) == '\n' then
+    output = output:sub(1, -2)
+  end
+
+  local view = vim.fn.winsaveview()
+  vim.api.nvim_buf_set_lines(0, 0, -1, false, vim.split(output, '\n', { plain = true }))
+  vim.fn.winrestview(view)
+end, { desc = '[C]ode format [J]SON buffer' })
+
 -- Quicksave command
 vim.keymap.set('n', '<leader>ss', ':update<CR>', { noremap = true, desc = 'Write current buffer' })
 vim.keymap.set('v', '<leader>ss', '<C-C>:update<CR>', { noremap = true, desc = 'Write current buffer' })

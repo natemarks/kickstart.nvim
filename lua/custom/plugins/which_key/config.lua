@@ -42,6 +42,7 @@ return {
     { '[c', desc = 'Jump to previous git hunk' },
     { ']c', desc = 'Jump to next git hunk' },
     { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
+    { '<leader>cj', desc = '[C]ode format [J]SON buffer' },
     { '<leader>d', group = '[D]ocument' },
     { '<leader>r', group = '[R]ename' },
     { '<leader>f', group = '[F]ind' },
