@@ -6,21 +6,15 @@ function M.setup()
 
   -- Toggle recording on/off
   vim.keymap.set('n', '<leader>ww', function()
-    -- Use whisper.nvim's toggle function if available
+    -- Use whisper.nvim's toggle function
     local whisper = require 'whisper'
-    if whisper.is_recording and whisper.is_recording() then
-      whisper.stop()
-    else
-      whisper.start()
-    end
+    whisper.toggle()
   end, { desc = '[W]hisper toggle recording' })
 
-  -- Insert transcription at cursor (while recording)
+  -- Manually trigger transcription insertion (while recording)
   vim.keymap.set('n', '<leader>wi', function()
-    local whisper = require 'whisper'
-    if whisper.insert_transcription then
-      whisper.insert_transcription()
-    end
+    local audio = require 'whisper.audio'
+    audio.manual_trigger_insertion()
   end, { desc = '[W]hisper [I]nsert transcription' })
 
   -- Alternative: keep original keybinds if you prefer
