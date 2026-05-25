@@ -184,6 +184,13 @@ This cheatsheet reflects the current keymaps in this config.
 | `gsh` | Normal | Highlight surrounding pair. |
 | `gsn` | Normal | Update surround search lines. |
 
+## Voice/Whisper (`<leader>w`)
+
+| Key | Mode | What it does |
+| --- | --- | --- |
+| `<leader>ww` | Normal | Toggle whisper recording (start/stop). |
+| `<leader>wi` | Normal | Insert transcription at cursor (while recording). |
+
 ## External Git UI
 
 | Key | Mode | What it does |
