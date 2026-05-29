@@ -30,6 +30,10 @@ This cheatsheet reflects the current keymaps in this config.
 | Key | Mode | What it does |
 | --- | --- | --- |
 | `\\` | Normal (in Neo-tree window) | Close Neo-tree window. |
+| `<CR>` or `o` | Normal (in Neo-tree, on file) | Open file in current window. |
+| `s` | Normal (in Neo-tree, on file) | Open file in vertical split. |
+| `S` | Normal (in Neo-tree, on file) | Open file in horizontal split. |
+| `t` | Normal (in Neo-tree, on file) | Open file in new tab. |
 
 ## Find (`<leader>f`)
 
@@ -50,6 +54,17 @@ This cheatsheet reflects the current keymaps in this config.
 | `<leader>fn` | Normal | Find files inside Neovim config. |
 | `<leader>/` | Normal | Fuzzy-find inside current buffer. |
 | `<leader><leader>` | Normal | Switch open buffers. |
+
+### Telescope Result Actions
+
+When a Telescope picker is open, use these keys on selected items:
+
+| Key | Mode | What it does |
+| --- | --- | --- |
+| `<CR>` | Insert/Normal (in Telescope) | Open file in current window. |
+| `<C-x>` | Insert/Normal (in Telescope) | Open file in horizontal split. |
+| `<C-v>` | Insert/Normal (in Telescope) | Open file in vertical split. |
+| `<C-t>` | Insert/Normal (in Telescope) | Open file in new tab. |
 
 ## Git: Fugitive (`<leader>g`)
 
