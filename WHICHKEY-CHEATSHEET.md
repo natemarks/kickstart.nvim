@@ -121,6 +121,7 @@ When a Telescope picker is open, use these keys on selected items:
 | --- | --- | --- |
 | `<leader>ss` | Normal/Visual | Save current buffer. |
 | `<leader>sa` | Normal | Save all buffers. |
+| `<leader>sr` | Normal | Reload all buffers from disk (manual check). |
 | `<leader>q` | Normal | Open diagnostics quickfix list. |
 | `<leader>ts` | Normal | Toggle spellcheck in current buffer. |
 | `<leader>tb` | Normal | Toggle inline git blame (gitsigns). |

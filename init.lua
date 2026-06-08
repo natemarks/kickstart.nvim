@@ -138,6 +138,11 @@ vim.opt.shadafile = 'NONE'
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
+-- Enable automatic buffer reload when files change on disk
+-- This is essential when external tools modify your project files
+--  See `:help 'autoread'`
+vim.opt.autoread = true
+
 -- Always enable English spellchecking
 local spell_dir = vim.fn.stdpath 'config' .. '/spell'
 if vim.fn.isdirectory(spell_dir) == 0 then
@@ -313,6 +318,17 @@ vim.api.nvim_create_autocmd({ 'BufWinEnter', 'WinEnter' }, {
   callback = function()
     vim.opt_local.spell = true
     vim.opt_local.spelllang = { 'en_us' }
+  end,
+})
+
+-- Check for external file changes and reload buffers
+-- Triggers when you return to Neovim, switch buffers, or close a terminal
+--  See `:help autoread` and `:help checktime`
+vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'TermClose' }, {
+  desc = 'Reload files changed outside Neovim',
+  group = vim.api.nvim_create_augroup('auto-reload-files', { clear = true }),
+  callback = function()
+    vim.cmd 'checktime'
   end,
 })
 
@@ -622,6 +638,23 @@ end, { desc = '[C]ode format [J]SON buffer' })
 vim.keymap.set('n', '<leader>ss', ':update<CR>', { noremap = true, desc = 'Write current buffer' })
 vim.keymap.set('v', '<leader>ss', '<C-C>:update<CR>', { noremap = true, desc = 'Write current buffer' })
 vim.keymap.set('n', '<leader>sa', ':wall<CR>', { noremap = true, desc = 'Write all buffers' })
+
+-- Reload all buffers from disk
+vim.keymap.set('n', '<leader>sr', function()
+  local buffers_reloaded = 0
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].buftype == '' then
+      local buf_name = vim.api.nvim_buf_get_name(buf)
+      if buf_name ~= '' and vim.fn.filereadable(buf_name) == 1 then
+        vim.api.nvim_buf_call(buf, function()
+          vim.cmd 'checktime'
+        end)
+        buffers_reloaded = buffers_reloaded + 1
+      end
+    end
+  end
+  vim.notify(string.format('Checked %d buffer(s) for changes', buffers_reloaded), vim.log.levels.INFO)
+end, { desc = '[S]ave: [R]eload all buffers from disk' })
 
 vim.keymap.set('n', '<leader>ts', function()
   vim.opt_local.spell = not vim.opt_local.spell:get()

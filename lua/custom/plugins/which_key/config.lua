@@ -71,6 +71,7 @@ return {
     { '<leader>s', group = '[S]ave' },
     { '<leader>ss', desc = '[S]ave current buffer' },
     { '<leader>sa', desc = '[S]ave [A]ll buffers' },
+    { '<leader>sr', desc = '[S]ave: [R]eload all buffers from disk' },
     { '<leader>t', group = '[T]oggle' },
     { '<leader>ts', desc = '[T]oggle [S]pellcheck' },
     { '<leader>tb', desc = '[T]oggle git line [B]lame' },
