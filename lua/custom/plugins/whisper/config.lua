@@ -27,9 +27,9 @@ function M.setup()
 
     -- Streaming configuration (v0.1.1+)
     enable_streaming = true,
-    poll_interval_ms = 5000, -- Auto-insert every 5 seconds (matches step_ms)
+    poll_interval_ms = 999999, -- Effectively disable auto-insert (use manual trigger instead)
     filter_markers = true, -- Remove [BLANK_AUDIO], etc.
-    manual_trigger_key = '<leader>ws', -- Changed from <Space> to avoid conflicts
+    manual_trigger_key = '<leader>ws', -- Use ,ws to manually insert transcription
   }
 end
 
