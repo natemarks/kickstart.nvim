@@ -26,13 +26,13 @@ function M.setup()
     threads = 4,
 
     -- Streaming configuration (v0.1.1+)
-    enable_streaming = true,
-    poll_interval_ms = 999999, -- Effectively disable auto-insert (use manual trigger instead)
+    enable_streaming = true, -- Enable streaming for manual trigger support
+    poll_interval_ms = 999999, -- Disable auto-polling (manual only)
     filter_markers = true, -- Remove [BLANK_AUDIO], etc.
-    manual_trigger_key = '<leader>ws', -- Use ,ws to manually insert transcription
+    manual_trigger_key = '<F99>', -- Set to unused key - we'll handle keybindings ourselves
 
-    -- Debug settings
-    debug = true,
+    -- Debug settings (keep for troubleshooting)
+    debug = false,
     debug_file = '/tmp/whisper-debug.log',
   }
 end
