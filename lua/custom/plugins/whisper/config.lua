@@ -1,50 +1,31 @@
 local M = {}
 
+-- Debug command to check keymaps
+vim.api.nvim_create_user_command('WhisperDebugKeymaps', function()
+  local state = require('whisper.state')
+  local buf = state.get_recording_buffer()
+  if not buf then
+    print('Not recording')
+    return
+  end
+
+  print('Buffer: ' .. buf)
+  print('Is recording: ' .. tostring(state.is_recording()))
+
+  -- Check <C-Space> keymap
+  local n_map = vim.fn.maparg('<C-Space>', 'n', false, true)
+  local i_map = vim.fn.maparg('<C-Space>', 'i', false, true)
+
+  print('\nNormal mode <C-Space>:')
+  print(vim.inspect(n_map))
+
+  print('\nInsert mode <C-Space>:')
+  print(vim.inspect(i_map))
+end, {})
+
 function M.setup()
-  require('whisper').setup {
-    -- Point to your downloaded model from whisper.cpp build
-    -- Adjust this path to match where you cloned whisper.cpp
-    model_path = vim.fn.expand '~/whisper.cpp/models/ggml-base.en.bin',
-
-    -- Alternative smaller/faster model:
-    -- model_path = vim.fn.expand('~/whisper.cpp/models/ggml-tiny.en.bin'),
-
-    -- Alternative larger/more accurate model:
-    -- model_path = vim.fn.expand('~/whisper.cpp/models/ggml-small.en.bin'),
-
-    -- Performance tuning: 5s is more responsive than default 20s
-    step_ms = 5000,
-
-    -- Voice activity detection threshold (0.0-1.0)
-    -- Higher = more aggressive filtering of silence
-    vad_thold = 0.6,
-
-    -- Language (default is auto-detect)
-    language = 'en',
-
-    -- Number of threads to use
-    threads = 4,
-
-    -- Streaming configuration (real-time transcription)
-    enable_streaming = true,
-    poll_interval_ms = 999999, -- Effectively disable auto-polling (use manual trigger only)
-    filter_markers = true, -- Remove [BLANK_AUDIO], (beeping), etc.
-
-    -- Use Ctrl+Space instead of Space to avoid double-space bug in insert mode
-    -- The plugin has a bug where <Space> gets inserted twice in insert mode
-    manual_trigger_key = '<C-Space>',
-
-    -- Override the default keybind notification
-    keybind = '<leader>ww',
-    notifications = true,
-
-    -- Enable debug logging to troubleshoot duplication
-    debug = true,
-    debug_file = vim.fn.expand('~/.whisper-debug.log'),
-  }
-
-  -- BUGFIX: Complete replacement of manual trigger logic
-  -- Root cause: poll_until_text() loops every 500ms and re-reads the SAME lines
+  -- BUGFIX: Replace manual_trigger_insertion BEFORE setup runs
+  -- This ensures the plugin's keymap captures our fixed function
   local audio = require('whisper.audio')
   local state = require('whisper.state')
   local insert = require('whisper.insert')
@@ -114,34 +95,64 @@ function M.setup()
     state.set_processing(false)
   end
 
-  -- Override start_recording to fix keymap and notification
+  -- Now run setup with our fixed function already in place
+  require('whisper').setup {
+    -- Point to your downloaded model from whisper.cpp build
+    -- Adjust this path to match where you cloned whisper.cpp
+    model_path = vim.fn.expand '~/whisper.cpp/models/ggml-base.en.bin',
+
+    -- Alternative smaller/faster model:
+    -- model_path = vim.fn.expand('~/whisper.cpp/models/ggml-tiny.en.bin'),
+
+    -- Alternative larger/more accurate model:
+    -- model_path = vim.fn.expand('~/whisper.cpp/models/ggml-small.en.bin'),
+
+    -- Performance tuning: 5s is more responsive than default 20s
+    step_ms = 5000,
+
+    -- Voice activity detection threshold (0.0-1.0)
+    -- Higher = more aggressive filtering of silence
+    vad_thold = 0.6,
+
+    -- Language (default is auto-detect)
+    language = 'en',
+
+    -- Number of threads to use
+    threads = 4,
+
+    -- Streaming configuration (real-time transcription)
+    enable_streaming = true,
+    poll_interval_ms = 999999, -- Effectively disable auto-polling (use manual trigger only)
+    filter_markers = true, -- Remove [BLANK_AUDIO], (beeping), etc.
+
+    -- Use Ctrl+Space instead of Space to avoid double-space bug in insert mode
+    -- The plugin has a bug where <Space> gets inserted twice in insert mode
+    manual_trigger_key = '<C-Space>',
+
+    -- Override the default keybind notification
+    keybind = '<leader>ww',
+    notifications = true,
+
+    -- Enable debug logging to troubleshoot duplication
+    debug = true,
+    debug_file = vim.fn.expand('~/.whisper-debug.log'),
+  }
+
+  -- Override start_recording to show correct notification
   local original_start_recording = audio.start_recording
   audio.start_recording = function(config)
-    -- Call original function
+    -- Call original function (which now uses our fixed manual_trigger_insertion)
     original_start_recording(config)
 
-    -- Re-bind insert mode keymap with correct behavior (don't return the key)
-    local buf = state.get_recording_buffer()
-    if buf and vim.api.nvim_buf_is_valid(buf) then
-      local trigger_key = config.manual_trigger_key or '<Space>'
-
-      -- Override both normal and insert mode keymaps
-      vim.keymap.set('n', trigger_key, function()
-        audio.manual_trigger_insertion()
-      end, { buffer = buf, desc = 'Insert transcribed text' })
-
-      vim.keymap.set('i', trigger_key, function()
-        audio.manual_trigger_insertion()
-        return '' -- FIX: Don't return trigger_key which causes recursive triggering
-      end, { buffer = buf, expr = true, desc = 'Insert transcribed text' })
-
-      -- Show correct notification
+    -- Show correct notification after a brief delay
+    vim.schedule(function()
+      local trigger_key = config.manual_trigger_key or '<C-Space>'
       local display_key = trigger_key:gsub('[<>]', '')
       vim.notify(
         'Recording... (' .. display_key .. '=insert, <leader>ww=stop)',
         vim.log.levels.INFO
       )
-    end
+    end)
   end
 end
 
