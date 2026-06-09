@@ -30,6 +30,10 @@ function M.setup()
     poll_interval_ms = 999999, -- Effectively disable auto-insert (use manual trigger instead)
     filter_markers = true, -- Remove [BLANK_AUDIO], etc.
     manual_trigger_key = '<leader>ws', -- Use ,ws to manually insert transcription
+
+    -- Debug settings
+    debug = true,
+    debug_file = '/tmp/whisper-debug.log',
   }
 end
 

@@ -1,19 +1,25 @@
 local M = {}
 
 function M.setup()
+  -- Override whisper.audio with our fixed version
+  package.loaded['whisper.audio'] = require('custom.plugins.whisper.audio_override')
+
   -- Override the default <C-g> keymaps with leader-based ones
   -- to avoid conflicts with Vim's built-in Ctrl-g (show file info)
 
   -- Toggle recording on/off
   vim.keymap.set('n', '<leader>ww', function()
-    -- Use whisper.nvim's toggle function
-    local whisper = require 'whisper'
-    whisper.toggle()
+    -- Use our overridden audio module
+    local audio = require 'whisper.audio'
+    local config = require('whisper.config').get()
+    if require('whisper.state').is_recording() then
+      audio.stop_recording()
+    else
+      audio.start_recording(config)
+    end
   end, { desc = '[W]hisper toggle recording' })
 
   -- Manually trigger transcription insertion (while recording)
-  -- Note: This is now redundant since we set manual_trigger_key to <leader>ws in config
-  -- Keeping it here for backwards compatibility
   vim.keymap.set('n', '<leader>wi', function()
     local audio = require 'whisper.audio'
     audio.manual_trigger_insertion()
