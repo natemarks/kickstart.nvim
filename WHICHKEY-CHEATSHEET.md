@@ -204,8 +204,14 @@ When a Telescope picker is open, use these keys on selected items:
 
 | Key | Mode | What it does |
 | --- | --- | --- |
-| `<leader>ww` | Normal | Toggle whisper recording (start/stop). |
-| `<leader>wi` | Normal | Insert transcription at cursor (while recording). |
+| `<leader>ww` | Normal | Toggle whisper recording (start/stop). Text automatically appears every ~5 seconds while recording. |
+
+**Workflow:**
+1. Press `,ww` to start recording
+2. Speak naturally - text automatically appears as you talk
+3. Press `,ww` to stop recording
+
+See `WHISPER_WORKFLOWS.md` for alternative configurations (non-streaming mode).
 
 ## External Git UI
 
