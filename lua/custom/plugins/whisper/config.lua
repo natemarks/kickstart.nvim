@@ -34,6 +34,10 @@ function M.setup()
     -- The plugin has a bug where <Space> gets inserted twice in insert mode
     manual_trigger_key = '<C-Space>',
 
+    -- Override the default keybind notification
+    keybind = '<leader>ww',
+    notifications = true,
+
     -- Enable debug logging to troubleshoot duplication
     debug = true,
     debug_file = vim.fn.expand('~/.whisper-debug.log'),
@@ -110,7 +114,7 @@ function M.setup()
     state.set_processing(false)
   end
 
-  -- Override start_recording to fix keymap
+  -- Override start_recording to fix keymap and notification
   local original_start_recording = audio.start_recording
   audio.start_recording = function(config)
     -- Call original function
@@ -120,11 +124,23 @@ function M.setup()
     local buf = state.get_recording_buffer()
     if buf and vim.api.nvim_buf_is_valid(buf) then
       local trigger_key = config.manual_trigger_key or '<Space>'
-      -- Override insert mode keymap to return empty string instead of trigger_key
+
+      -- Override both normal and insert mode keymaps
+      vim.keymap.set('n', trigger_key, function()
+        audio.manual_trigger_insertion()
+      end, { buffer = buf, desc = 'Insert transcribed text' })
+
       vim.keymap.set('i', trigger_key, function()
         audio.manual_trigger_insertion()
         return '' -- FIX: Don't return trigger_key which causes recursive triggering
       end, { buffer = buf, expr = true, desc = 'Insert transcribed text' })
+
+      -- Show correct notification
+      local display_key = trigger_key:gsub('[<>]', '')
+      vim.notify(
+        'Recording... (' .. display_key .. '=insert, <leader>ww=stop)',
+        vim.log.levels.INFO
+      )
     end
   end
 end
