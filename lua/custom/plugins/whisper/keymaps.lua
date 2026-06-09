@@ -1,21 +1,14 @@
 local M = {}
 
 function M.setup()
-  -- Override the default <C-g> keymaps with leader-based ones
-  -- to avoid conflicts with Vim's built-in Ctrl-g (show file info)
+  -- Simple keymapping for automatic timer-based insertion
+  -- Text appears automatically every 5 seconds while recording
 
   -- Toggle recording on/off
   vim.keymap.set('n', '<leader>ww', function()
-    -- Use whisper.nvim's toggle function
     local whisper = require 'whisper'
     whisper.toggle()
   end, { desc = '[W]hisper toggle recording' })
-
-  -- Manually trigger transcription insertion (while recording)
-  vim.keymap.set('n', '<leader>wi', function()
-    local audio = require 'whisper.audio'
-    audio.manual_trigger_insertion()
-  end, { desc = '[W]hisper [I]nsert transcription' })
 
   -- Alternative: keep original keybinds if you prefer
   -- Uncomment these if you want both leader and Ctrl keymaps:
