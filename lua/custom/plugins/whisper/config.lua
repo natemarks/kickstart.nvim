@@ -13,6 +13,7 @@ function M.setup()
 
     -- Whisper processing parameters
     step_ms = 5000, -- Process audio every 5 seconds
+    length_ms = 30000, -- Keep 30 seconds of audio in buffer (critical for non-streaming!)
     vad_thold = 0.6, -- Voice activity detection threshold (0.0-1.0)
     language = 'en',
     threads = 4,
