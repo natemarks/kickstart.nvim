@@ -2,9 +2,9 @@
 
 This document describes the available workflows for using whisper.nvim voice transcription in your Neovim configuration.
 
-## Current Configuration: Alternative 1 (Recommended)
+## Current Configuration: Alternative 2 (Recommended)
 
-**Automatic Timer-Based Insertion** - Text appears automatically as you speak.
+**Non-Streaming Mode** - Speak everything, then see all text at once when you stop.
 
 ### Configuration
 
@@ -273,14 +273,13 @@ model_path = vim.fn.expand '~/whisper.cpp/models/ggml-base.en.bin',
 
 ## Recommendation
 
-**Start with Alternative 1** (automatic timer-based insertion). 
+**Use Alternative 2** (non-streaming mode) - this is the current configuration.
 
-It provides the best balance of:
-- Real-time feedback
-- Simplicity
-- Natural workflow
-- Hands-free operation
+Alternative 1 (automatic timer-based) causes **text duplication** because whisper-stream writes cumulative output to its temp file. Each polling cycle reads a line containing all previous text plus new text, causing duplicates.
 
-Try it for a few days. If you find the automatic insertion timing disruptive or don't actually use the real-time feedback, switch to Alternative 2.
+Alternative 2 avoids this by:
+- Only reading the file once (when you stop recording)
+- Taking only the last line (final result)
+- Inserting it once
 
-Most users find Alternative 1 works perfectly because the 5-second interval matches natural speaking rhythm - you don't even notice when text appears, it just flows naturally as you speak.
+Unless you absolutely need real-time feedback while speaking, Alternative 2 is simpler, more reliable, and duplication-free.

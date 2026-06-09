@@ -17,15 +17,17 @@ function M.setup()
     language = 'en',
     threads = 4,
 
-    -- ALTERNATIVE 1: Automatic timer-based insertion (current configuration)
-    -- Text automatically appears every 5 seconds while recording
-    enable_streaming = true,
-    poll_interval_ms = 5000, -- Auto-insert every 5 seconds (matches step_ms)
+    -- ALTERNATIVE 2: Non-streaming mode (current configuration)
+    -- Speak everything, then text appears all at once when you stop recording
+    -- This avoids duplication issues with whisper-stream's cumulative output
+    enable_streaming = false,
     filter_markers = true, -- Remove [BLANK_AUDIO], (beeping), etc.
 
-    -- ALTERNATIVE 2: Non-streaming mode (insert all at once when stopping)
-    -- To use Alternative 2, change enable_streaming to false:
-    -- enable_streaming = false,
+    -- ALTERNATIVE 1: Automatic timer-based insertion (NOT recommended - causes duplication)
+    -- whisper-stream writes cumulative output, causing text to duplicate with polling
+    -- To use Alternative 1 (at your own risk):
+    -- enable_streaming = true,
+    -- poll_interval_ms = 5000,
   }
 end
 
