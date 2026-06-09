@@ -34,6 +34,28 @@ function M.setup()
     -- The plugin has a bug where <Space> gets inserted twice in insert mode
     manual_trigger_key = '<C-Space>',
   }
+
+  -- BUGFIX: Override the plugin's buggy keymap setup to prevent duplicate insertions
+  -- The upstream plugin returns trigger_key in insert mode expr mapping, causing infinite recursion
+  local audio = require('whisper.audio')
+  local original_start_recording = audio.start_recording
+
+  audio.start_recording = function(config)
+    -- Call original function
+    original_start_recording(config)
+
+    -- Re-bind insert mode keymap with correct behavior (don't return the key)
+    local state = require('whisper.state')
+    local buf = state.get_recording_buffer()
+    if buf and vim.api.nvim_buf_is_valid(buf) then
+      local trigger_key = config.manual_trigger_key or '<Space>'
+      -- Override insert mode keymap to return empty string instead of trigger_key
+      vim.keymap.set('i', trigger_key, function()
+        audio.manual_trigger_insertion()
+        return '' -- FIX: Don't return trigger_key which causes recursive triggering
+      end, { buffer = buf, expr = true, desc = 'Insert transcribed text' })
+    end
+  end
 end
 
 return M
