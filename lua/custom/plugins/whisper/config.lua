@@ -39,21 +39,75 @@ function M.setup()
     debug_file = vim.fn.expand('~/.whisper-debug.log'),
   }
 
-  -- BUGFIX: Override the plugin's buggy keymap and polling logic
-  -- Issues:
-  -- 1. Insert mode expr mapping returns trigger_key causing infinite recursion
-  -- 2. Auto-polling timer interferes with manual trigger, causing duplicates
+  -- BUGFIX: Complete replacement of manual trigger logic
+  -- Root cause: poll_until_text() loops every 500ms and re-reads the SAME lines
   local audio = require('whisper.audio')
   local state = require('whisper.state')
+  local insert = require('whisper.insert')
 
-  -- Override manual_trigger_insertion to prevent timer interference
-  local original_manual_trigger = audio.manual_trigger_insertion
+  -- Replace manual_trigger_insertion completely with single-shot logic
   audio.manual_trigger_insertion = function()
-    -- Check if already processing to prevent re-entrance
+    local config = require('whisper.config').get()
+
+    -- Prevent re-entrance
     if state.is_processing() then
       return
     end
-    original_manual_trigger()
+
+    if not state.is_recording() then
+      return
+    end
+
+    if not config.enable_streaming then
+      return
+    end
+
+    -- Set processing state
+    state.set_processing(true)
+
+    -- Read temp file ONCE
+    local temp_file = state.get_temp_file()
+    if not temp_file or vim.fn.filereadable(temp_file) ~= 1 then
+      state.set_processing(false)
+      return
+    end
+
+    local ok, lines = pcall(vim.fn.readfile, temp_file)
+    if not ok or not lines or #lines == 0 then
+      state.set_processing(false)
+      vim.notify('No transcription available yet', vim.log.levels.WARN)
+      return
+    end
+
+    -- Get only NEW lines since last read
+    local last_read = state.get_last_read_line()
+    local new_lines = {}
+
+    for i = last_read + 1, #lines do
+      local line = lines[i]
+      if config.filter_markers then
+        -- Remove markers
+        line = line:gsub('%[.-%]', ''):gsub('%(.-%)', '')
+      end
+      line = line:match('^%s*(.-)%s*$') or ''
+      if line ~= '' then
+        table.insert(new_lines, line)
+      end
+    end
+
+    if #new_lines == 0 then
+      state.set_processing(false)
+      vim.notify('No new text (silence detected)', vim.log.levels.WARN)
+      return
+    end
+
+    -- Insert text ONCE
+    local text = table.concat(new_lines, ' ')
+    insert.insert_text(text)
+
+    -- Update state
+    state.set_last_read_line(#lines)
+    state.set_processing(false)
   end
 
   -- Override start_recording to fix keymap
@@ -72,16 +126,6 @@ function M.setup()
         return '' -- FIX: Don't return trigger_key which causes recursive triggering
       end, { buffer = buf, expr = true, desc = 'Insert transcribed text' })
     end
-  end
-
-  -- Override poll_transcription_file to prevent auto-poll during manual trigger
-  local original_poll = audio.poll_transcription_file
-  audio.poll_transcription_file = function(config)
-    -- Skip auto-polling if manual trigger is processing
-    if state.is_processing() then
-      return
-    end
-    original_poll(config)
   end
 end
 
