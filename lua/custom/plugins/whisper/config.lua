@@ -24,6 +24,12 @@ function M.setup()
 
     -- Number of threads to use
     threads = 4,
+
+    -- Streaming configuration (v0.1.1+)
+    enable_streaming = true,
+    poll_interval_ms = 5000, -- Auto-insert every 5 seconds (matches step_ms)
+    filter_markers = true, -- Remove [BLANK_AUDIO], etc.
+    manual_trigger_key = '<leader>ws', -- Changed from <Space> to avoid conflicts
   }
 end
 

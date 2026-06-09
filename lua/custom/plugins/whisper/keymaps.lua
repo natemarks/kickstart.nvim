@@ -12,6 +12,8 @@ function M.setup()
   end, { desc = '[W]hisper toggle recording' })
 
   -- Manually trigger transcription insertion (while recording)
+  -- Note: This is now redundant since we set manual_trigger_key to <leader>ws in config
+  -- Keeping it here for backwards compatibility
   vim.keymap.set('n', '<leader>wi', function()
     local audio = require 'whisper.audio'
     audio.manual_trigger_insertion()
