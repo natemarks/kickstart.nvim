@@ -206,6 +206,7 @@ When a Telescope picker is open, use these keys on selected items:
 | --- | --- | --- |
 | `<leader>ww` | Normal | Toggle whisper recording (start/stop). |
 | `<leader>wi` | Normal | Insert transcription at cursor (while recording). |
+| `<C-Space>` | Normal/Insert | Manually trigger transcription insertion (while recording). Real-time streaming mode. |
 
 ## External Git UI
 

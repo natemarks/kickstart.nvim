@@ -24,6 +24,15 @@ function M.setup()
 
     -- Number of threads to use
     threads = 4,
+
+    -- Streaming configuration (real-time transcription)
+    enable_streaming = true,
+    poll_interval_ms = 5000, -- Match step_ms for consistency
+    filter_markers = true, -- Remove [BLANK_AUDIO], (beeping), etc.
+
+    -- Use Ctrl+Space instead of Space to avoid double-space bug in insert mode
+    -- The plugin has a bug where <Space> gets inserted twice in insert mode
+    manual_trigger_key = '<C-Space>',
   }
 end
 
