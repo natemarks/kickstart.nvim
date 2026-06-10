@@ -23,6 +23,7 @@ return {
 
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
+    'mrcjkb/rustaceanvim',
   },
   keys = function(_, keys)
     local dap = require 'dap'
@@ -84,6 +85,7 @@ return {
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
         'delve',
+        'codelldb',
       },
     }
 
@@ -140,6 +142,17 @@ return {
         -- On Windows delve must be run attached or it crashes.
         -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
         detached = vim.fn.has 'win32' == 0,
+      },
+    }
+
+    -- Configure Rust debugging with codelldb
+    local extension_path = vim.fn.stdpath 'data' .. '/mason/packages/codelldb/extension/'
+    local codelldb_path = extension_path .. 'adapter/codelldb'
+    local liblldb_path = extension_path .. 'lldb/lib/liblldb.so'
+
+    vim.g.rustaceanvim = {
+      dap = {
+        adapter = require('rustaceanvim.config').get_codelldb_adapter(codelldb_path, liblldb_path),
       },
     }
   end,
