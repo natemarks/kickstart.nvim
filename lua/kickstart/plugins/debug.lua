@@ -23,7 +23,6 @@ return {
 
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
-    'mrcjkb/rustaceanvim',
   },
   keys = function(_, keys)
     local dap = require 'dap'
@@ -146,13 +145,30 @@ return {
     }
 
     -- Configure Rust debugging with codelldb
+    -- Manual DAP configuration for Rust (no rustaceanvim needed)
     local extension_path = vim.fn.stdpath 'data' .. '/mason/packages/codelldb/extension/'
     local codelldb_path = extension_path .. 'adapter/codelldb'
     local liblldb_path = extension_path .. 'lldb/lib/liblldb.so'
 
-    vim.g.rustaceanvim = {
-      dap = {
-        adapter = require('rustaceanvim.config').get_codelldb_adapter(codelldb_path, liblldb_path),
+    dap.adapters.codelldb = {
+      type = 'server',
+      port = '${port}',
+      executable = {
+        command = codelldb_path,
+        args = { '--port', '${port}' },
+      },
+    }
+
+    dap.configurations.rust = {
+      {
+        name = 'Launch',
+        type = 'codelldb',
+        request = 'launch',
+        program = function()
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/debug/', 'file')
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
       },
     }
   end,
