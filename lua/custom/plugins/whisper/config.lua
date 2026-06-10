@@ -1,7 +1,8 @@
 local M = {}
 
 function M.setup()
-  require('whisper').setup {
+  local whisper = require 'whisper'
+  whisper.setup {
     -- Point to your downloaded model from whisper.cpp build
     model_path = vim.fn.expand '~/whisper.cpp/models/ggml-base.en.bin',
 
@@ -30,6 +31,28 @@ function M.setup()
     -- enable_streaming = true,
     -- poll_interval_ms = 5000,
   }
+
+  -- Override: Prevent trigger key insertion in insert mode
+  -- This patches the audio module after whisper.setup() has run
+  local audio = require 'whisper.audio'
+  if audio and audio.start_recording then
+    local original_start_recording = audio.start_recording
+    audio.start_recording = function(config)
+      original_start_recording(config)
+
+      -- Re-map the insert mode trigger to not insert the key
+      if config and config.trigger_key then
+        local trigger_key = config.trigger_key
+        -- Find the current buffer
+        local buf = vim.api.nvim_get_current_buf()
+        -- Override the insert mode mapping
+        vim.keymap.set('i', trigger_key, function()
+          require('whisper.audio').manual_trigger_insertion()
+          return '' -- Don't insert the trigger key
+        end, { buffer = buf, expr = true, desc = 'Whisper: manual trigger (no key insertion)' })
+      end
+    end
+  end
 end
 
 return M
