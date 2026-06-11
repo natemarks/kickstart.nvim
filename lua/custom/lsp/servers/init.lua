@@ -7,6 +7,7 @@ function M.get()
     require 'custom.lsp.servers.go',
     require 'custom.lsp.servers.python',
     require 'custom.lsp.servers.lua',
+    require 'custom.lsp.servers.rust',
   }
 
   for _, module in ipairs(modules) do
