@@ -1,11 +1,10 @@
 # kickstart.nvimA
 
-IMPORTANT:  Tested on neovim 0.11.6
+IMPORTANT:  Tested on neovim 0.12.3
 
 
-PROBHLEM: install fd for checkhealt
-PROBLEM : fully support gotmpl anf gowork form checkhealth error
-PROBLEM compare git branches diffview.nvim requires git 2.31
+PROBLEM: install fd for checkhealth
+PROBLEM: compare git branches diffview.nvim requires git 2.31
 PROBLEM: can use copilot plugin
 PROBLEM: generate go tets
 

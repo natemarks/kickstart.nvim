@@ -33,7 +33,7 @@ local function ensure_python_parser_installed()
 end
 
 M.opts = {
-  ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'python', 'query', 'vim', 'vimdoc' },
+  ensure_installed = { 'bash', 'c', 'diff', 'go', 'gomod', 'gowork', 'gotmpl', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'python', 'query', 'rust', 'vim', 'vimdoc' },
   parser_install_dir = data_site_path,
   auto_install = has_tree_sitter_cli,
   highlight = {

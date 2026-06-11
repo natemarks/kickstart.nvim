@@ -25,6 +25,12 @@ function M.get()
               ['async-recursion'] = { 'async_recursion' },
             },
           },
+          inlayHints = {
+            enable = true,
+            chainingHints = { enable = true },
+            parameterHints = { enable = true },
+            typeHints = { enable = true },
+          },
         },
       },
     },
