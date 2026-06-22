@@ -666,5 +666,27 @@ end, { desc = '[T]oggle [S]pellcheck' })
 -- Quick quit command
 vim.keymap.set('n', '<leader>e', ':quit<CR>', { noremap = true, desc = 'Quit current window' })
 vim.keymap.set('n', '<leader>E', ':qa!<CR>', { noremap = true, desc = 'Quit all windows' })
+
+-- F4: Select debug configuration (shows menu to choose how to run)
+vim.keymap.set('n', '<F4>', function()
+  local dap = require 'dap'
+  local filetype = vim.bo.filetype
+  local configs = dap.configurations[filetype]
+  if configs then
+    vim.ui.select(configs, {
+      prompt = 'Select debug configuration:',
+      format_item = function(config)
+        return config.name
+      end,
+    }, function(config)
+      if config then
+        dap.run(config)
+      end
+    end)
+  else
+    vim.notify('No debug configurations for ' .. filetype, vim.log.levels.WARN)
+  end
+end, { desc = 'Debug: Select configuration' })
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

@@ -171,5 +171,40 @@ return {
         stopOnEntry = false,
       },
     }
+
+    -- Python debug configurations
+    dap.configurations.python = {
+      {
+        type = 'python',
+        request = 'launch',
+        name = 'Launch file',
+        program = '${file}',
+        pythonPath = python_for_debugpy,
+      },
+      {
+        type = 'python',
+        request = 'launch',
+        name = 'Launch module with arguments',
+        module = function()
+          return vim.fn.input('Module name: ')
+        end,
+        args = function()
+          local args_string = vim.fn.input('Arguments: ')
+          return vim.split(args_string, ' +')
+        end,
+        pythonPath = python_for_debugpy,
+      },
+      {
+        type = 'python',
+        request = 'launch',
+        name = 'Launch file with arguments',
+        program = '${file}',
+        args = function()
+          local args_string = vim.fn.input('Arguments: ')
+          return vim.split(args_string, ' +')
+        end,
+        pythonPath = python_for_debugpy,
+      },
+    }
   end,
 }
