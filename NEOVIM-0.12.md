@@ -36,6 +36,15 @@ Neovim has had a built-in package manager since 0.8 (`:h packages`), but it's **
 
 ---
 
+## Plugin Migrations Required for 0.12
+
+Neovim 0.12 runs this config as-is; two plugins shipped incompatible rewrites that the config now follows. `lazy-lock.json` pins plugin versions so future plugin updates are deliberate (`:Lazy update`).
+
+- **nvim-treesitter `main` branch** (`lua/custom/plugins/treesitter/`). `main` is a rewrite that requires Neovim 0.12; `master` is frozen and supports only 0.11. It ignores the old `ensure_installed` / `highlight` / `indent` options: parsers are installed with `require('nvim-treesitter').install(...)`, and highlighting/indent are started per buffer with `vim.treesitter.start()` in a `FileType` autocmd. Building parsers needs the `tree-sitter` CLI >= 0.26.1 (apt's is too old on Ubuntu 26.04) and a C compiler.
+- **mason-lspconfig v2** (`lua/custom/lsp/mason.lua`). v2 removed the `handlers` option, which silently dropped the per-server settings in `lua/custom/lsp/servers/`. Settings now go through `vim.lsp.config(name, settings)`, shared capabilities through `vim.lsp.config('*', ...)`, and `automatic_enable` lists only our servers.
+- **LSP keymaps.** Neovim 0.11+ ships `grn`, `gra`, `grr`, `gri`, `grt` defaults; telescope references moved from `gr` to `grr` so `gr` no longer waits for `timeoutlen`.
+- **Renames.** `vim.highlight` → `vim.hl`; `williamboman/*` → `mason-org/*`.
+
 ## Rustaceanvim: What You Get on Neovim 0.12+
 
 ### What is rustaceanvim?

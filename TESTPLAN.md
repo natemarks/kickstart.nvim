@@ -44,7 +44,7 @@ Vendor exceptions expected to remain in `lua/kickstart/plugins/`:
 2. Run `:LspInfo`
    - Pass: expected servers attach (`lua_ls`, `gopls`, `pyright`)
 3. Validate common mappings in attached buffer:
-   - `gd`, `gr`, `gI`, `<leader>D`, `<leader>rn`, `<leader>ca`, `gD`
+   - `gd`, `grr`, `gI`, `<leader>D`, `<leader>rn`, `<leader>ca`, `gD`
 4. Validate diagnostics mapping:
    - `<leader>q`
 
@@ -58,11 +58,12 @@ Vendor exceptions expected to remain in `lua/kickstart/plugins/`:
 4. In Python file, expand your custom `ppyt` snippet
    - Pass: snippet inserts expected scaffold
 
-## 5) Treesitter Runtimepath Check
+## 5) Treesitter Check (nvim-treesitter `main`)
 
-1. Run `:checkhealth` after startup settles
-2. Confirm no runtimepath regression for data site path, especially:
-   - `~/.local/share/nvim/site/` remains discoverable
+1. Run `:checkhealth nvim-treesitter` after startup settles (parsers install asynchronously on first start)
+2. Confirm the `tree-sitter` CLI (>= 0.26.1) and a C compiler are found
+3. Confirm every parser in `lua/custom/plugins/treesitter/config.lua` (`M.parsers`) is installed
+4. Open a `.py` file and run `:lua print(vim.treesitter.highlighter.active[vim.api.nvim_get_current_buf()] ~= nil)`; expect `true`
 
 ## 6) Neotest Regression
 
@@ -133,7 +134,7 @@ Confirm each expected server attaches with no duplicate/missing clients.
 
 4) Keymap Regression
 
-In an attached buffer, test mapped LSP actions: gd, gr, gI, <leader>D, <leader>rn, <leader>ca, gD.
+In an attached buffer, test mapped LSP actions: gd, grr, gI, <leader>D, <leader>rn, <leader>ca, gD.
 Confirm Telescope-backed LSP pickers still open and return results.
 
 5) Feature Regression
@@ -154,14 +155,7 @@ Save/reopen to ensure no autocommand duplication (highlights, detach cleanup).
 
 ## Treesitter
 
-Treesitter has special path requirements. Use :checkhealth to see if this error is present.
-Note: it's present immediately after Neovim starts in some setups, so wait a moment before running :checkhealth.
-
-```
-179 - /home/natepm/.local/share/nvim/site/
-1 - ✅ OK is writable.
-2 - ❌ ERROR is not in runtimepath
-```
+nvim-treesitter `main` installs parsers to `~/.local/share/nvim/site/`, which Neovim already has on its runtimepath. If parsers are missing, check that `tree-sitter --version` works (install it with `make treesitter_cli` in the dotfiles repo) and run `:TSUpdate`.
 
 ## Autocomplete (nvim-cmp refactor)
 

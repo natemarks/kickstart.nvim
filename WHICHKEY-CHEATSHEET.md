@@ -134,7 +134,7 @@ When a Telescope picker is open, use these keys on selected items:
 | Key | Mode | What it does |
 | --- | --- | --- |
 | `gd` | Normal | Go to definition (Telescope). |
-| `gr` | Normal | Go to references (Telescope). |
+| `grr` | Normal | Go to references (Telescope). Other built-in `gr*` LSP maps: `grn` rename, `gra` code action, `gri` implementation, `grt` type definition. |
 | `gI` | Normal | Go to implementation (Telescope). |
 | `gD` | Normal | Go to declaration. |
 | `<leader>D` | Normal | Go to type definition (Telescope). |

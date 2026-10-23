@@ -5,7 +5,7 @@ function M.add(bufnr, has_inlay_hints)
 
   local spec = {
     { 'gd', desc = 'LSP: [G]oto [D]efinition', buffer = bufnr },
-    { 'gr', desc = 'LSP: [G]oto [R]eferences', buffer = bufnr },
+    { 'grr', desc = 'LSP: [G]oto [R]eferences', buffer = bufnr },
     { 'gI', desc = 'LSP: [G]oto [I]mplementation', buffer = bufnr },
     { 'gD', desc = 'LSP: [G]oto [D]eclaration', buffer = bufnr },
     { '<leader>D', desc = 'LSP: Type [D]efinition', buffer = bufnr },
