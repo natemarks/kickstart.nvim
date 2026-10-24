@@ -316,9 +316,15 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 vim.api.nvim_create_autocmd({ 'BufWinEnter', 'WinEnter' }, {
-  desc = 'Keep English spellchecking enabled',
+  desc = 'Keep English spellchecking enabled in file buffers',
   group = vim.api.nvim_create_augroup('kickstart-force-english-spell', { clear = true }),
-  callback = function()
+  callback = function(args)
+    -- special buffers (neo-tree, telescope, help, quickfix, terminal) set buftype;
+    -- spell-checking their file names and UI text only adds red underlines
+    if vim.bo[args.buf].buftype ~= '' then
+      vim.opt_local.spell = false
+      return
+    end
     vim.opt_local.spell = true
     vim.opt_local.spelllang = { 'en_us' }
   end,
